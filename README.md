@@ -1,5 +1,5 @@
 <div align="center">
-  <img alt="Logo" src="https://rawcdn.githack.com/OgunwoleOluwatobi/Footy/e1bbfc9e2b10ee7f2d9ed32a5e8d59d402df5c0a/assets/logo.pngg" width="100" />
+  <img alt="Logo" src="https://rawcdn.githack.com/OgunwoleOluwatobi/Footy/e1bbfc9e2b10ee7f2d9ed32a5e8d59d402df5c0a/assets/logo.png" width="100" />
 </div>
 <h1 align="center">
   Footy
