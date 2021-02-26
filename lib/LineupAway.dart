@@ -87,64 +87,12 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                              child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                              child: Text(datalltwo[5]['number'].toString(), textAlign: TextAlign.center,),
                                             ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 90,
-                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 90,
-                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[5]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -191,183 +139,12 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[5]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 90,
-                                            child: Text(datalltwo[5]['player'], textAlign: TextAlign.center),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                    ],
-                                  ),
-                                ),
-                            ) : formaway[0] == '4' ? 
-                                Positioned(
-                              top: 720,
-                              child: Container(
-                                  //margin: EdgeInsets.only(right: 50),
-                                  /*decoration: BoxDecoration(
-                                          border: new Border(
-                                            right: new BorderSide(width: 2.0, color: Colors.white),
-                                            left: new BorderSide(width: 2.0, color: Colors.white),
-                                            top: new BorderSide(width: 2.0, color: Colors.white),
-                                            bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                          ),),*/
-                                  width: MediaQuery.of(context).size.width,//408,
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 90,
-                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center,),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 90,
-                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center,),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
                                                   child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center,),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[4]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 90,
-                                            child: Text(datalltwo[4]['player'], textAlign: TextAlign.center,),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                    ],
-                                  ),
-                                )
-                                ) : Positioned(
-                              top: 720,
-                              child: Container(
-                                  //margin: EdgeInsets.only(right: 50),
-                                  /*decoration: BoxDecoration(
-                                          border: new Border(
-                                            right: new BorderSide(width: 2.0, color: Colors.white),
-                                            left: new BorderSide(width: 2.0, color: Colors.white),
-                                            top: new BorderSide(width: 2.0, color: Colors.white),
-                                            bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                          ),),*/
-                                  width: MediaQuery.of(context).size.width,//408,
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 90,
-                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -414,12 +191,235 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
+                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 90,
+                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                    ],
+                                  ),
+                                ),
+                            ) : formaway[0] == '4' ? 
+                                Positioned(
+                              top: 720,
+                              child: Container(
+                                  //margin: EdgeInsets.only(right: 50),
+                                  /*decoration: BoxDecoration(
+                                          border: new Border(
+                                            right: new BorderSide(width: 2.0, color: Colors.white),
+                                            left: new BorderSide(width: 2.0, color: Colors.white),
+                                            top: new BorderSide(width: 2.0, color: Colors.white),
+                                            bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                          ),),*/
+                                  width: MediaQuery.of(context).size.width,//408,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[4]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 90,
+                                            child: Text(datalltwo[4]['player'], textAlign: TextAlign.center,),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 90,
+                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center,),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 90,
+                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center,),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 90,
+                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center,),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                    ],
+                                  ),
+                                )
+                                ) : Positioned(
+                              top: 720,
+                              child: Container(
+                                  //margin: EdgeInsets.only(right: 50),
+                                  /*decoration: BoxDecoration(
+                                          border: new Border(
+                                            right: new BorderSide(width: 2.0, color: Colors.white),
+                                            left: new BorderSide(width: 2.0, color: Colors.white),
+                                            top: new BorderSide(width: 2.0, color: Colors.white),
+                                            bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                          ),),*/
+                                  width: MediaQuery.of(context).size.width,//408,
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
                                                   child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
                                             child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 90,
+                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 90,
+                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -461,64 +461,12 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                              child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                              child: Text(datalltwo[5]['number'].toString(), textAlign: TextAlign.center,),
                                             ),
                                           ),
                                           Container(
                                             width: 70,
-                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 70,
-                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 70,
-                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[5]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -565,12 +513,64 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[5]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 70,
-                                            child: Text(datalltwo[5]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 70,
+                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 70,
+                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -612,38 +612,12 @@ class LineupAway extends StatelessWidget {
                                               color: palette.darkVibrantColor.color,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[4]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center,),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 90,
-                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center,),
+                                            child: Text(datalltwo[4]['player'], textAlign: TextAlign.center,),
                                           )
                                         ],
                                       ),
@@ -690,12 +664,38 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[4]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[4]['player'], textAlign: TextAlign.center,),
+                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center,),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 90,
+                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center,),
                                           )
                                         ],
                                       ),
@@ -736,12 +736,12 @@ class LineupAway extends StatelessWidget {
                                               color: palette.dominantColor.color,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -788,12 +788,12 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -834,64 +834,12 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                              child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                              child: Text(datalltwo[5]['number'].toString(), textAlign: TextAlign.center,),
                                             ),
                                           ),
                                           Container(
                                             width: 70,
-                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 70,
-                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 70,
-                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[5]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -938,12 +886,64 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[5]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 70,
-                                            child: Text(datalltwo[5]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 70,
+                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 70,
+                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -985,38 +985,12 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[4]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center,),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 90,
-                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center,),
+                                            child: Text(datalltwo[4]['player'], textAlign: TextAlign.center,),
                                           )
                                         ],
                                       ),
@@ -1063,12 +1037,38 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[4]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[2]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[4]['player'], textAlign: TextAlign.center,),
+                                            child: Text(datalltwo[2]['player'], textAlign: TextAlign.center,),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 90,
+                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center,),
                                           )
                                         ],
                                       ),
@@ -1109,12 +1109,12 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -1161,12 +1161,12 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[3]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[1]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 90,
-                                            child: Text(datalltwo[3]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[1]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -1211,64 +1211,12 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                              child: Text(datalltwo[4]['number'].toString(), textAlign: TextAlign.center,),
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 70,
-                                            child: Text(datalltwo[4]['player'], textAlign: TextAlign.center),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[5]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[8]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 70,
-                                            child: Text(datalltwo[5]['player'], textAlign: TextAlign.center),
-                                          )
-                                        ],
-                                      ),
-                                      Spacer(),
-                                      Column(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 45,
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: new Border(
-                                                right: new BorderSide(width: 2.0, color: Colors.white),
-                                                left: new BorderSide(width: 2.0, color: Colors.white),
-                                                top: new BorderSide(width: 2.0, color: Colors.white),
-                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
-                                              ),
-                                              borderRadius: BorderRadius.circular(50),
-                                              color: Colors.black,
-                                            ),
-                                            child: Center(
-                                                  child: Text(datalltwo[6]['number'].toString(), textAlign: TextAlign.center,),
-                                                ),
-                                          ),
-                                          Container(
-                                            width: 70,
-                                            child: Text(datalltwo[6]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[8]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
@@ -1315,16 +1263,72 @@ class LineupAway extends StatelessWidget {
                                               color: Colors.black,
                                             ),
                                             child: Center(
-                                                  child: Text(datalltwo[8]['number'].toString(), textAlign: TextAlign.center,),
+                                                  child: Text(datalltwo[6]['number'].toString(), textAlign: TextAlign.center,),
                                                 ),
                                           ),
                                           Container(
                                             width: 70,
-                                            child: Text(datalltwo[8]['player'], textAlign: TextAlign.center),
+                                            child: Text(datalltwo[6]['player'], textAlign: TextAlign.center),
                                           )
                                         ],
                                       ),
                                       Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                                  child: Text(datalltwo[5]['number'].toString(), textAlign: TextAlign.center,),
+                                                ),
+                                          ),
+                                          Container(
+                                            width: 70,
+                                            child: Text(datalltwo[5]['player'], textAlign: TextAlign.center),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            width: 45,
+                                            height: 45,
+                                            decoration: BoxDecoration(
+                                              border: new Border(
+                                                right: new BorderSide(width: 2.0, color: Colors.white),
+                                                left: new BorderSide(width: 2.0, color: Colors.white),
+                                                top: new BorderSide(width: 2.0, color: Colors.white),
+                                                bottom: new BorderSide(width: 2.0, color: Colors.white),
+                                              ),
+                                              borderRadius: BorderRadius.circular(50),
+                                              color: Colors.black,
+                                            ),
+                                            child: Center(
+                                              child: Text(datalltwo[4]['number'].toString(), textAlign: TextAlign.center,),
+                                            ),
+                                          ),
+                                          Container(
+                                            width: 70,
+                                            child: Text(datalltwo[4]['player'], textAlign: TextAlign.center),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      
+                                      
+                                      
+                                      
                                     ],
                                   ),
                                 ),

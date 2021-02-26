@@ -61,23 +61,68 @@ class _HomeState extends State<Home> {
     items:  <BottomNavigationBarItem>[
       BottomNavigationBarItem(
               icon: new Icon(FontAwesomeIcons.listAlt), /*new Image.asset("assets/house.png")*/
-              title: Text("")
+              title: AnimatedContainer(
+                margin: EdgeInsets.only(top: 5),
+                duration: const Duration(milliseconds: 200),
+                height: 6,
+                width: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? cIndex == 0 ? Colors.black : Colors.transparent : cIndex == 0 ? Colors.white : Colors.transparent
+                ),
+              ),
             ),
             BottomNavigationBarItem(
               icon: new Icon(FontAwesomeIcons.upload),
-              title: Text("")
+              title: AnimatedContainer(
+                margin: EdgeInsets.only(top: 5),
+                duration: const Duration(milliseconds: 200),
+                height: 6,
+                width: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? cIndex == 1 ? Colors.black : Colors.transparent : cIndex == 1 ? Colors.white : Colors.transparent
+                ),
+              ),
             ),
             BottomNavigationBarItem(
               icon: new Icon(FontAwesomeIcons.footballBall),
-              title: Text("")
+              title: AnimatedContainer(
+                margin: EdgeInsets.only(top: 5),
+                duration: const Duration(milliseconds: 200),
+                height: 6,
+                width: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? cIndex == 2 ? Colors.black : Colors.transparent : cIndex == 2 ? Colors.white : Colors.transparent
+                ),
+              ),
             ),
             BottomNavigationBarItem(
               icon: new Icon(FontAwesomeIcons.chartBar),
-              title: Text("")
+              title: AnimatedContainer(
+                margin: EdgeInsets.only(top: 5),
+                duration: const Duration(milliseconds: 100),
+                height: 6,
+                width: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? cIndex == 3 ? Colors.black : Colors.transparent : cIndex == 3 ? Colors.white : Colors.transparent
+                ),
+              ),
             ),
             BottomNavigationBarItem(
               icon: new Icon(FontAwesomeIcons.bookmark),
-              title: Text("")
+              title: AnimatedContainer(
+                margin: EdgeInsets.only(top: 5),
+                duration: const Duration(milliseconds: 200),
+                height: 6,
+                width: 6,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? cIndex == 4 ? Colors.black : Colors.transparent : cIndex == 4 ? Colors.white : Colors.transparent
+                ),
+              ),
             )
     ]
     ));

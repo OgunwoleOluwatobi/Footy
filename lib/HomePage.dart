@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:core';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -9,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'Posts.dart';
+import 'string_extension.dart';
+
 
 /*void main() => runApp(MaterialApp(
    home: HomePage(),
@@ -122,7 +126,7 @@ class _HomePageState extends State<HomePage>{
     });
 
     _scrollController.addListener(() {
-      print(_scrollController.position.pixels);
+      //print(_scrollController.position.pixels);
       if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         _fetch();
       }
@@ -236,7 +240,7 @@ class _HomePageState extends State<HomePage>{
     Widget postsUI(String image, String title, String description, String date, String time, int index){
 
     final makeListCard = ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0,),
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0,),
       leading: Container(
         width: 100,
         padding: EdgeInsets.only(right: 3.0),
@@ -245,7 +249,10 @@ class _HomePageState extends State<HomePage>{
             right: new BorderSide(width: 1.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black38 : Colors.white24),
           )
         ),
-        child: new Image.network(image),
+        child: CachedNetworkImage(
+          imageUrl: image,
+          fit: BoxFit.cover,
+        ),
       ),
       title: new Text(
         date +'     '+time,
@@ -261,23 +268,25 @@ class _HomePageState extends State<HomePage>{
             child: Padding(
               padding: EdgeInsets.only(top: 7),
               child: new Text(
-              title.toUpperCase(),
-              style: Theme.of(context).textTheme.title.copyWith(fontSize: 15), maxLines: 2, overflow: TextOverflow.ellipsis,
+              title.capitalize(),
+              style: Theme.of(context).textTheme.title.copyWith(fontSize: 19, letterSpacing: 0.8,), maxLines: 2, overflow: TextOverflow.ellipsis,
             )),
           )
         ],
       ),
       trailing: Icon(Icons.keyboard_arrow_right, color: Theme.of(context).iconTheme.color, size: 20.0,),
       onTap: () {
-        _generatePalette(context, postList[index].image, index).then((_palette) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(postt: postList[index])));
+        /*_generatePalette(context, postList[index].image, index).then((_palette) {
           Navigator.push(context, MaterialPageRoute(builder: (context) => Details(postt: postList[index], palette: _palette)),);
-        });
+        });*/
       },
     );
 
     return new Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
       elevation: 0,
+      //color: Colors.white30,
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
       //color: Color(0xffF3F3F3),
       child: makeListCard
@@ -323,13 +332,20 @@ class _HomePageState extends State<HomePage>{
             children: <Widget>[
               Container(
                 height: 180.0,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10.0),
-                    topRight: Radius.circular(10.0),
+                    topLeft: Radius.circular(8.0),
+                    topRight: Radius.circular(8.0),
                   ),
-                  image: DecorationImage(
-                    image: NetworkImage(image),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8.0),
+                    topRight: Radius.circular(8.0),
+                  ),
+                  child: CachedNetworkImage(
+                    imageUrl: image,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -337,8 +353,8 @@ class _HomePageState extends State<HomePage>{
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              title.toUpperCase(),
-              style: Theme.of(context).textTheme.title.copyWith(fontSize: 20.0), maxLines: 2, overflow: TextOverflow.ellipsis,
+              title.capitalize(),
+              style: Theme.of(context).textTheme.title.copyWith(fontSize: 25.0, letterSpacing: 1), maxLines: 2, overflow: TextOverflow.ellipsis,
             ),
           ),
           Padding(
@@ -377,15 +393,17 @@ class _HomePageState extends State<HomePage>{
 
     return GestureDetector(
       child: Card(
-        elevation: 4.0,
+        elevation: 2.0,
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        //color: Colors.white,
         child: specialCard
       ),
       onTap: () {
-        _generatePalette(context, postList[index].image, index).then((_palette) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(postt: postList[index])));
+        /*_generatePalette(context, postList[index].image, index).then((_palette) {
           Navigator.push(context, MaterialPageRoute(builder: (context) => Details(postt: postList[index], palette: _palette)),);
-        });
+        });*/
       },
     );
   }
@@ -417,7 +435,7 @@ class _HomePageState extends State<HomePage>{
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Container(
-                            margin: EdgeInsets.only(left: 25, top: 40),
+                            margin: EdgeInsets.only(left: 25, top: 20),
                             child: Text("News Feed", style: TextStyle(fontSize: 27, fontFamily: 'Roboto', letterSpacing: 0.5, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, decoration: TextDecoration.none), textAlign: TextAlign.left,),
                           ),
                           Padding(
@@ -534,7 +552,7 @@ class PicCarousel extends StatefulWidget {
         return Container(
           //decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10.0))),
           child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            //borderRadius: BorderRadius.all(Radius.circular(10)),
             child: Image.asset("assets/$assetName", height: 250, fit: BoxFit.contain)),
         );
       }).toList();
@@ -567,7 +585,7 @@ class PicCarousel extends StatefulWidget {
                     enableInfiniteScroll: true,
                     items: child,
                     autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 5),
+                    autoPlayInterval: Duration(seconds: 8),
                     onPageChanged: (index) {
                       setState(() {
                         _current = index;

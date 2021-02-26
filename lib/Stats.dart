@@ -95,7 +95,7 @@ class _StatsState extends State<Stats> {
             children: <Widget>[
               Container(
                 height: 150.0,
-                width: 200,
+                width: 180,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10.0),

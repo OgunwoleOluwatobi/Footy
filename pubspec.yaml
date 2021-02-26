@@ -83,6 +83,7 @@ flutter:
     - assets/own_goal.png
     - assets/black_ball.png
     - assets/white_ball.png
+    - assets/auba.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
