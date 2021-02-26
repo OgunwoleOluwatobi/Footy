@@ -13,10 +13,11 @@ class ThemeNotifier with ChangeNotifier {
         scaffoldBackgroundColor: Color(0xffF3F3F3),
         bottomAppBarColor: Color(0xffF3F3F3),
         canvasColor: Color(0xffF3F3F3),
+        cardColor: Colors.white,
         //accentColor: Colors.transparent,
         //highlightColor: Colors.transparent,
         textTheme: TextTheme(
-          title: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+          title: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
           body1: TextStyle(color: Colors.grey,),
           body2: TextStyle(color: Colors.black87)
         ),
@@ -37,6 +38,7 @@ class ThemeNotifier with ChangeNotifier {
           body1: TextStyle(color: Colors.white70,),
           body2: TextStyle(color: Colors.white70),
         ),
+        cardColor: Colors.black,
         cardTheme: CardTheme(
           color: Colors.black,
         ),

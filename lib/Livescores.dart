@@ -68,11 +68,20 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
   List data, datar, datta, dattta, datttta, liveevents;
   int dat;
   int round = 0;
+  int rounds = 0;
   int roundn = 0;
+  int roundsfirst = 0;
+  String leag;
   bool _visi = false;
   double opa = 0.0;
   Map<dynamic, dynamic> _data;
   Timer timer;
+  List firstround = [];
+  List scndround = [];
+  List firstrounds = [];
+  List scndrounds = [];
+  List ucluelround =[];
+  List ucluelrounds =[];
   List<Standing> standlist = [];
   List<Scores> scoreList = [];
   List<Scores> scoreListr = [];
@@ -299,23 +308,96 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       Scores scoresr;
       //data.forEach((dat) =>
       for (var i = 0; i < data.length; i++) {
-        scores = new Scores(_data['api']['fixtures'][i]['fixture_id'], _data['api']['fixtures'][i]['homeTeam']['team_id'], _data['api']['fixtures'][i]['awayTeam']['team_id'], _data['api']['fixtures'][i]['league']['name'],_data['api']['fixtures'][i]['league']['logo'], _data['api']['fixtures'][i]['homeTeam']['team_name'], _data['api']['fixtures'][i]['awayTeam']['team_name'], _data['api']['fixtures'][i]['homeTeam']['logo'], _data['api']['fixtures'][i]['awayTeam']['logo'], _data['api']['fixtures'][i]['goalsHomeTeam'], _data['api']['fixtures'][i]['goalsAwayTeam'], _data['api']['fixtures'][i]['elapsed']);
+        if(data[i]['goalsHomeTeam'] == null && data[i]['goalsAwayTeam'] == null) {
+          if (data[i]['league']['name'] == 'Champions League' || data[i]['league']['name'] == 'Europa League') {
+            if (ucluelround.length == 0) {
+              ucluelround.add(data[i]['round']);
+              leag = data[i]['league']['name'];
+            }else {
+              if(ucluelround[ucluelround.length - 1] != data[i]['round']) {
+                ucluelround.add(data[i]['round']);
+              }
+            }
+            rounds = ucluelround.length;
+          }else{
+            var ronds = data[i]['round'];
+            var rondSplits = ronds.split(" ");
+            rounds = int.parse(rondSplits[3]);
+            print("SSSSSSSSSSSSSS $rounds");
+            if(roundsfirst == 0){
+              roundsfirst = int.parse(rondSplits[3]);
+            }
+          }
+        }
+        var halft = data[i]['score']['halftime'];
+        var half = halft == null ? ['0', '0'] : halft.split("-");
+        scores = new Scores(_data['api']['fixtures'][i]['fixture_id'], _data['api']['fixtures'][i]['homeTeam']['team_id'], _data['api']['fixtures'][i]['awayTeam']['team_id'], _data['api']['fixtures'][i]['league']['name'],_data['api']['fixtures'][i]['league']['logo'], _data['api']['fixtures'][i]['homeTeam']['team_name'], _data['api']['fixtures'][i]['awayTeam']['team_name'], _data['api']['fixtures'][i]['homeTeam']['logo'], _data['api']['fixtures'][i]['awayTeam']['logo'], _data['api']['fixtures'][i]['goalsHomeTeam'], _data['api']['fixtures'][i]['goalsAwayTeam'], _data['api']['fixtures'][i]['elapsed'], int.parse(half[0]), int.parse(half[1]));
         scoreList.add(scores);
       }
 
       for (var i = 0; i < datar.length; i++) {
         if(datar[i]['goalsHomeTeam'] != null && datar[i]['goalsAwayTeam'] != null) {
-          var rond = datar[i]['round'];
-          var rondSplit = rond.split(" ");
-          if(round == 0){
-            round = int.parse(rondSplit[3]);
-            print("RRRRRRRRRRRRRRR $round");
+          if (datar[i]['league']['name'] == 'Champions League' || datar[i]['league']['name'] == 'Europa League') {
+            if (ucluelround.length == 0) {
+              ucluelrounds.add(data[i]['round']);
+            }else {
+              if(ucluelround[ucluelround.length - 1] != data[i]['round']) {
+                ucluelrounds.add(data[i]['round']);
+              }
+            }
+            round =ucluelrounds.length;
+          }else{
+            var rond = datar[i]['round'];
+            var rondSplit = rond.split(" ");
+            if(round == 0){
+              round = int.parse(rondSplit[3]);
+              print("RRRRRRRRRRRRRRR $round");
+            }
           }
         }
-        scoresr = new Scores(datar[i]['fixture_id'],datar[i]['homeTeam']['team_id'], datar[i]['awayTeam']['team_id'], datar[i]['league']['name'],datar[i]['league']['logo'], datar[i]['homeTeam']['team_name'], datar[i]['awayTeam']['team_name'], datar[i]['homeTeam']['logo'], datar[i]['awayTeam']['logo'], datar[i]['goalsHomeTeam'], datar[i]['goalsAwayTeam'], datar[i]['elapsed']);
+        var halft = datar[i]['score']['halftime'];
+        var half = halft == null ? ['0', '0'] : halft.split("-");
+        scoresr = new Scores(datar[i]['fixture_id'],datar[i]['homeTeam']['team_id'], datar[i]['awayTeam']['team_id'], datar[i]['league']['name'],datar[i]['league']['logo'], datar[i]['homeTeam']['team_name'], datar[i]['awayTeam']['team_name'], datar[i]['homeTeam']['logo'], datar[i]['awayTeam']['logo'], datar[i]['goalsHomeTeam'], datar[i]['goalsAwayTeam'], datar[i]['elapsed'], int.parse(half[0]), int.parse(half[1]));
         scoreListr.add(scoresr);
       }
-      roundn = roundNo(round);
+
+      for (var m = roundsfirst; m <= rounds; m++) {
+        firstrounds.clear();
+        for (var j = 0; j < datar.length; j++) {
+          if (data[j]['league']['name'] == 'Champions League' || data[j]['league']['name'] == 'Europa League') {
+            if(data[j]['goalsHomeTeam'] == null && data[j]['goalsAwayTeam'] == null && data[j]['round'] == ucluelround[m]) {
+                firstrounds.add(data[j]['goalsAwayTeam']);
+              }
+          }else {
+            if(data[j]['goalsHomeTeam'] == null && data[j]['goalsAwayTeam'] == null && data[j]['round'] == "Regular Season - $m") {
+              print(roundsNo(m));
+              firstrounds.add(data[j]['goalsAwayTeam']);
+            }
+          }
+        }
+        print(firstrounds);
+        scndrounds.add(firstrounds.length);
+      }
+      print(scndrounds);
+
+      for (var m = 0; m < round; m++) {
+        firstround.clear();
+        for (var j = 0; j < datar.length; j++) {
+          if (data[j]['league']['name'] == 'Champions League' || data[j]['league']['name'] == 'Europa League') {
+            if(datar[j]['goalsHomeTeam'] != null && datar[j]['goalsAwayTeam'] != null && datar[j]['round'] == ucluelrounds[m]) {
+                firstround.add(datar[j]['goalsAwayTeam']);
+              }
+          }else {
+            if(datar[j]['goalsHomeTeam'] != null && datar[j]['goalsAwayTeam'] != null && datar[j]['round'] == "Regular Season - ${roundNo(m)}") {
+              print(roundNo(m));
+              firstround.add(datar[j]['goalsAwayTeam']);
+            }
+          }
+        }
+        print(firstround);
+        scndround.add(firstround.length);
+      }
+      print(scndround);
         
       //);
       
@@ -334,7 +416,11 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
     return "Sucsses";
   }
   int roundNo(int id) {
-      return 29-id;
+      return round - id;
+  }
+
+  int roundsNo(int id) {
+      return roundsfirst + id;
   }
 
   Future<String> getLiveJsonData() async {
@@ -475,7 +561,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                         height: 40,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: dattta == null ? AssetImage('assets/fill.png') : dattta[0]['name'] == 'Premier League' ? Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/prem_black.png') : AssetImage('assets/permier_white.png') : dattta[0]['name'] == 'Champions League' ? Theme.of(context).scaffoldBackgroundColor != Color(0xffF3F3F3) ? AssetImage('assets/ucl_white.png') : AssetImage('assets/permier_white.png') :  NetworkImage(dattta[0]['logo']),//NetworkImage(dattta[0]['logo']),
+                              image: dattta == null ? AssetImage('assets/fill.png') : dattta[0]['name'] == 'Premier League' ? Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/prem_black.png') : AssetImage('assets/permier_white.png') : dattta[0]['name'] == 'Champions League' ? Theme.of(context).scaffoldBackgroundColor != Color(0xffF3F3F3) ? AssetImage('assets/ucl_white.png') : NetworkImage(dattta[0]['logo']) :  NetworkImage(dattta[0]['logo']),//NetworkImage(dattta[0]['logo']),
                               fit: BoxFit.contain
                             ),
                           )
@@ -524,13 +610,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                                   //margin: EdgeInsets.all(10.0),
                                   width: 40,
                                   height:40,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(datar[index]['homeTeam']['logo']),
-                                      fit: BoxFit.contain
-                                    ),
-                                    
-                                  ),
+                                  child: Image.network(datar[index]['homeTeam']['logo'], fit: BoxFit.contain,),
                                 ),
                                 Spacer(),
                             Container(
@@ -575,13 +655,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                                   //margin: EdgeInsets.all(10.0),
                                   width: 40,
                                   height: 40,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(datar[index]['awayTeam']['logo']),
-                                      fit: BoxFit.contain
-                                    ),
-                                    
-                                  ),
+                                  child: Image.network(datar[index]['awayTeam']['logo'], fit: BoxFit.contain,),
                                 ),
                           ],
                         )
@@ -617,13 +691,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                                   //margin: EdgeInsets.all(10.0),
                                   width: 40,
                                   height:40,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(data[index]['homeTeam']['logo']),
-                                      fit: BoxFit.contain
-                                    ),
-                                    
-                                  ),
+                                  child: Image.network(data[index]['homeTeam']['logo'], fit: BoxFit.contain,),
                                 ),
                                 Spacer(),
                             Container(
@@ -668,13 +736,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                                   //margin: EdgeInsets.all(10.0),
                                   width: 40,
                                   height: 40,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image: NetworkImage(data[index]['awayTeam']['logo']),
-                                      fit: BoxFit.contain
-                                    ),
-                                    
-                                  ),
+                                  child: Image.network(data[index]['awayTeam']['logo'], fit: BoxFit.contain,),
                                 ),
                           ],
                         )
@@ -714,13 +776,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                                       //margin: EdgeInsets.all(10.0),
                                       width: 40,
                                       height: 40,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: NetworkImage(datta[inum]['homeTeam']['logo']),
-                                          fit: BoxFit.contain
-                                        ),
-                                        
-                                      ),
+                                      child: Image.network(datta[inum]['homeTeam']['logo'], fit: BoxFit.contain,),
                                     ),
                                     //Spacer(),
                                     SizedBox(width: 15,),
@@ -788,13 +844,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                                       //margin: EdgeInsets.all(10.0),
                                       width: 40,
                                       height: 40,
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image: NetworkImage(datta[inum]['awayTeam']['logo']),
-                                          fit: BoxFit.contain
-                                        )
-                                        
-                                      ),
+                                      child: Image.network(datta[inum]['awayTeam']['logo'], fit: BoxFit.contain,),
                                     ),
                                     //events = datta[inum]['events'],
                                 
@@ -884,7 +934,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
         );
     }
 
-    Widget bodyTable(int no, String name, int mp, int win, int draw, int lose, int points, String image) {
+    Widget bodyTable(int no, String name, int mp, int win, int draw, int lose, int points, String image, int gf, int ga) {
       return new Container(
         //color: Colors.white24,
         child: new Center(
@@ -898,7 +948,58 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
                     child: Padding(
                       padding: const EdgeInsets.only(left:0.0, top: 0, bottom: 3.0),
-                      child: new Column(
+                      child: no == datttta.length ? Container(
+                        margin: EdgeInsets.only(bottom: 5),
+                        child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                no == 1 || no ==2 || no == 3 ? Container(
+                                  margin: EdgeInsets.only(right: 11, top: 0),
+                                  width: 5,
+                                  height: 30,
+                                  color: Colors.green,
+                                ) : no == 4 ? Container(
+                                  margin: EdgeInsets.only(right: 11, top: 0),
+                                  width: 5,
+                                  height: 30,
+                                  color: Color(0xffFA7B17),
+                                ) : no == datttta.length-2 || no == datttta.length-1 || no == datttta.length ? Container(
+                                  margin: EdgeInsets.only(right: 11, top: 0),
+                                  width: 5,
+                                  height: 30,
+                                  color: Colors.red,
+                                ) : Container(margin: EdgeInsets.only(right: 16, top: 0,), height: 30,),
+                                Container(width: 15,child: Text(no.toString(), style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),)),
+                                SizedBox(width: 10),
+                                Container(
+                                  margin: EdgeInsets.only(right: 10.0),
+                                  width: 30,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: NetworkImage(image),
+                                      fit: BoxFit.contain
+                                    ),
+                                    
+                                  ),
+                                ),
+                                Container(width: 120,child: name == null ? Text("") : Container(width: 120.0, child: Text(name, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),))),
+                                SizedBox(width: 23),
+                                Container(width: 15,child: mp == null ? Text("") : Text(mp.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center)),
+                                SizedBox(width: 16),
+                                Container(width: 15,child: win == null ? Text("") : Text(win.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center)),
+                                SizedBox(width: 16),
+                                Container(width: 15,child: draw == null ? Text("") : Text(draw.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center)),
+                                SizedBox(width: 18),
+                                Container(width: 15,child: lose == null ? Text("") : Text(lose.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center)),
+                                SizedBox(width: 16),
+                                Container(width: 20,child: points == null ? Text("") : Text(points.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center,)),
+                                SizedBox(width: 16),
+                                Container(width: 20,child: gf == null || ga ==null ? Text("") : Text((gf-ga).toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center,)),
+                              ]
+                            ),
+                      ) : new Column(
                         children: <Widget>[
                           Row(
                             //mainAxisAlignment: MainAxisAlignment.center,
@@ -914,14 +1015,14 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                                 width: 5,
                                 height: 30,
                                 color: Color(0xffFA7B17),
-                              ) : no == 18 || no == 19 || no == 20 ? Container(
+                              ) : no == datttta.length-2 || no == datttta.length-1 || no == datttta.length ? Container(
                                 margin: EdgeInsets.only(right: 11, top: 0),
                                 width: 5,
                                 height: 30,
                                 color: Colors.red,
                               ) : Container(margin: EdgeInsets.only(right: 16, top: 0,), height: 30,),
                               Container(width: 15,child: Text(no.toString(), style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),)),
-                              SizedBox(width: 20),
+                              SizedBox(width: 10),
                               Container(
                                 margin: EdgeInsets.only(right: 10.0),
                                 width: 30,
@@ -935,16 +1036,18 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                                 ),
                               ),
                               Container(width: 120,child: name == null ? Text("") : Container(width: 120.0, child: Text(name, style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),))),
-                              SizedBox(width: 25),
-                              Container(width: 15,child: mp == null ? Text("") : Text(mp.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70),)),
-                              SizedBox(width: 22),
-                              Container(width: 15,child: win == null ? Text("") : Text(win.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70),)),
-                              SizedBox(width: 22),
-                              Container(width: 15,child: draw == null ? Text("") : Text(draw.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70),)),
-                              SizedBox(width: 22),
-                              Container(width: 15,child: lose == null ? Text("") : Text(lose.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70),)),
-                              SizedBox(width: 22),
-                              Container(width: 15,child: points == null ? Text("") : Text(points.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70),)),
+                              SizedBox(width: 23),
+                              Container(width: 15,child: mp == null ? Text("") : Text(mp.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center)),
+                              SizedBox(width: 16),
+                              Container(width: 15,child: win == null ? Text("") : Text(win.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center)),
+                              SizedBox(width: 16),
+                              Container(width: 15,child: draw == null ? Text("") : Text(draw.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center)),
+                              SizedBox(width: 18),
+                              Container(width: 15,child: lose == null ? Text("") : Text(lose.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center)),
+                              SizedBox(width: 16),
+                              Container(width: 20,child: points == null ? Text("") : Text(points.toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center,)),
+                              SizedBox(width: 16),
+                              Container(width: 20,child: gf == null || ga ==null ? Text("") : Text((gf-ga).toString(), style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black54 : Colors.white70), textAlign: TextAlign.center,)),
                             ]
                           ),
                           Divider(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black38 : Colors.white24),
@@ -1006,7 +1109,8 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       ]
     );*/
 
-    List<Widget> _sliverList(int round, int len) {
+    //USe if sliver doesnt already have an array of slivers.
+    /*List<Widget> _sliverList(int round, int len) {
       var widgetList = new List<Widget>();
       for (int i = round; i > 0; i--)
         widgetList
@@ -1026,7 +1130,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
             )
           );
       return widgetList;
-    }
+    }*/
 
     
 
@@ -1043,16 +1147,6 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(height: 20,),
-                    /*DropdownButtonFormField<String>(
-                      hint: Center(child: Text("Premier League")),
-                      items: <String>['A', 'B', 'C', 'D'].map((String value) {
-                        return new DropdownMenuItem<String>(
-                          value: value,
-                          child: new Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (_) {},
-                    ),*/
                     SizedBox(height: 20,),
                     Padding(
                       padding: const EdgeInsets.only(left: 35.0),
@@ -1158,15 +1252,76 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                       
                 childCount: datta?.length
               ),
-            ) : _cIndex == 1 ? SliverList(
+            ) : _cIndex == 1 ? leag == 'Champions League' || leag == 'Europa League' ? SliverList(
               delegate: SliverChildBuilderDelegate(
-                (context, index) => 
-                  //_data == null ? new Center(child: CircularProgressIndicator(backgroundColor: Color(0xffF3F3F3), valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),) : 
-                  scoreCard(data[index]['homeTeam']['team_name'], data[index]['goalsHomeTeam'], data[index]['awayTeam']['team_name'], data[index]['goalsAwayTeam'], data[index]['elapsed'], index, data[index]['events']),
-                      
-                childCount: data?.length
+                (context, i) =>
+                  Container(
+                  margin: EdgeInsets.only(bottom: 0),
+                  width: MediaQuery.of(context).size.width,
+                  child: scndrounds[i] != 0 ? StickyHeader(
+                    header: new Container(
+                      margin: EdgeInsets.only(bottom: 4),
+                      height: 50.0,
+                      color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Color(0xffE2E2E2) : Color(0xff121C25),
+                      padding: new EdgeInsets.symmetric(horizontal: 16.0),
+                      alignment: Alignment.centerLeft,
+                      child: new Text(ucluelround[i],
+                        style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 22, fontFamily: 'RobotoMed',),
+                      ),
+                    ),
+                    content: new Container(
+                      height: (scndrounds[i]*86).toDouble(),
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: data.length,
+                        itemBuilder: (context, index) => data[index]['round'] == ucluelround[i] ? scoreCard(data[index]['homeTeam']['team_name'], data[index]['goalsHomeTeam'], data[index]['awayTeam']['team_name'], data[index]['goalsAwayTeam'], data[index]['elapsed'], index, data[index]['events']) : SizedBox(height: 0),
+                      )
+                    ),
+                  ) : SizedBox(height: 0,),
+                ),    
+                childCount: ucluelround.length,
               ),
-            ):
+            ): SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, i) =>
+                  Container(
+                  margin: EdgeInsets.only(bottom: 0),
+                  //height: MediaQuery.of(context).size.height/1.65,
+                  width: MediaQuery.of(context).size.width,
+                  child: //ListView.builder(
+                    //itemCount: round+1,
+                    //itemBuilder: (context, i) {
+                      scndrounds[i] != 0 ? StickyHeader(
+                        header: new Container(
+                          margin: EdgeInsets.only(bottom: 4),
+                          height: 50.0,
+                          color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Color(0xffE2E2E2) : Color(0xff121C25),
+                          padding: new EdgeInsets.symmetric(horizontal: 16.0),
+                          alignment: Alignment.centerLeft,
+                          child: new Text('Gameweek ${roundsNo(i)}',
+                            style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 22, fontFamily: 'RobotoMed',),
+                          ),
+                        ),
+                        content: new Container(
+                          height: (scndrounds[i]*86).toDouble(),
+                          width: MediaQuery.of(context).size.width,
+                          child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: data.length,
+                            itemBuilder: (context, index) => data[index]['round'] == "Regular Season - ${roundsNo(i)}" ? scoreCard(data[index]['homeTeam']['team_name'], data[index]['goalsHomeTeam'], data[index]['awayTeam']['team_name'], data[index]['goalsAwayTeam'], data[index]['elapsed'], index, data[index]['events']) : SizedBox(height: 0),
+                          )
+                        ),
+                      ) : SizedBox(height: 0,),
+                    //}
+                //)
+                ), 
+                  //_data == null ? new Center(child: CircularProgressIndicator(backgroundColor: Color(0xffF3F3F3), valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),) : 
+                  /*scoreCard(data[index]['homeTeam']['team_name'], data[index]['goalsHomeTeam'], data[index]['awayTeam']['team_name'], data[index]['goalsAwayTeam'], data[index]['elapsed'], index, data[index]['events']),*/
+                      
+                childCount: rounds - roundsfirst,
+              ),
+            ) :
             
              _cIndex == 0 ?
              /*SliverToBoxAdapter(
@@ -1201,29 +1356,60 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                )),
              )*/
              //_sliverList(round, datar.length)
-             SliverList(
+             leag == 'Champions League' || leag == 'Europa League' ? SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, i) =>
+                  Container(
+                  margin: EdgeInsets.only(bottom: 0),
+                  width: MediaQuery.of(context).size.width,
+                  child: StickyHeader(
+                    header: new Container(
+                      margin: EdgeInsets.only(bottom: 4),
+                      height: 50.0,
+                      color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Color(0xffE2E2E2) : Color(0xff121C25),
+                      padding: new EdgeInsets.symmetric(horizontal: 16.0),
+                      alignment: Alignment.centerLeft,
+                      child: new Text(ucluelrounds[i],
+                        style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 22, fontFamily: 'RobotoMed',),
+                      ),
+                    ),
+                    content: new Container(
+                      height: (scndround[i]*86).toDouble(),
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: datar.length,
+                        itemBuilder: (context, index) => datar[index]['round'] == ucluelrounds[i] ? resultCard(datar[index]['homeTeam']['team_name'], datar[index]['goalsHomeTeam'], datar[index]['awayTeam']['team_name'], datar[index]['goalsAwayTeam'], datar[index]['elapsed'], index, datar[index]['events']) : SizedBox(height: 0),
+                      )
+                    ),
+                  )
+                ),    
+                childCount: ucluelrounds.length,
+              ),
+            ): SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, i) => 
                   Container(
-                 margin: EdgeInsets.only(bottom: 15),
-                 height: MediaQuery.of(context).size.height/1.65,
+                 margin: EdgeInsets.only(bottom: 0),
+                 //height: MediaQuery.of(context).size.height/1.65,
                  width: MediaQuery.of(context).size.width,
                  child: //ListView.builder(
                    //itemCount: round+1,
                    //itemBuilder: (context, i) {
                      StickyHeader(
                       header: new Container(
-                        
+                        margin: EdgeInsets.only(bottom: 4),
                         height: 50.0,
-                        color: Colors.transparent,
+                        color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Color(0xffE2E2E2) : Color(0xff121C25),
                         padding: new EdgeInsets.symmetric(horizontal: 16.0),
                         alignment: Alignment.centerLeft,
                         child: new Text('Gameweek ${roundNo(i)}',
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 22, fontFamily: 'RobotoMed',),
                         ),
                       ),
                       content: new Container(
-                        height: 200,
+                        height: (scndround[i]*86).toDouble(),
+                        width: MediaQuery.of(context).size.width,
                         child: ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
                           itemCount: datar.length,
@@ -1254,27 +1440,29 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                                 margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
                                 child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.fromLTRB(10.0, 13.0, 13.0, 16.0),
                                   child: new Column(
                                     children: <Widget>[
                                       Row(
                                         children: <Widget>[
                                           Text(
-                                            "#",
+                                            "Pos",
                                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),
                                             ),
-                                          SizedBox(width: 50),
+                                          SizedBox(width: 40),
                                           Text("Club", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),),
-                                          SizedBox(width: 120),
+                                          SizedBox(width: 105),
                                           Text("MP", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),),
-                                          SizedBox(width: 20),
+                                          SizedBox(width: 15),
                                           Text("W", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),),
-                                          SizedBox(width: 20),
+                                          SizedBox(width: 15),
                                           Text("D", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),),
-                                          SizedBox(width: 20),
+                                          SizedBox(width: 15),
                                           Text("L", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),),
-                                          SizedBox(width: 20),
+                                          SizedBox(width: 15),
                                           Text("Pts", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),),
+                                          SizedBox(width: 15),
+                                          Text("GD", style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white),),
                                         ]
                                       ),
                                     ],
@@ -1304,14 +1492,115 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                 ) 
                 ),
                 ) 
-                : SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) => bodyTable(datttta[index]['rank'], datttta[index]['teamName'],datttta[index]['all']['matchsPlayed'], datttta[index]['all']['win'], datttta[index]['all']['draw'], datttta[index]['all']['lose'], datttta[index]['points'], datttta[index]['logo']),
-                      /*bodyTable(standlist[index].no, standlist[index].name, standlist[index].win, standlist[index].draw, standlist[index].lose, standlist[index].points, standlist[index].image),*/
+                : SliverToBoxAdapter(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: (datttta.length*49).toDouble(),
+                        child: ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder:
+                            (context, index) => 
+                                  bodyTable(datttta[index]['rank'], datttta[index]['teamName'],datttta[index]['all']['matchsPlayed'], datttta[index]['all']['win'], datttta[index]['all']['draw'], datttta[index]['all']['lose'], datttta[index]['points'], datttta[index]['logo'], datttta[index]['all']['goalsFor'], datttta[index]['all']['goalsAgainst']),
+                            /*bodyTable(standlist[index].no, standlist[index].name, standlist[index].win, standlist[index].draw, standlist[index].lose, standlist[index].points, standlist[index].image),*/
 
-                      childCount: datttta?.length
-                    ),
-                  ) : SliverToBoxAdapter(),
+                            itemCount: datttta?.length
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: new Card(
+                          elevation: 1.0,
+                          margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 8.0),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    margin: EdgeInsets.all(5.0),
+                                    child: Text("Qualification/Relegation", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 16, fontFamily: 'RobotoMed',),)
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          margin: EdgeInsets.only(right: 10),
+                                          width: 10,
+                                          height: 10,
+                                          color: Colors.green,
+                                        ),
+                                        Text("UEFA Champions League Group Stage", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 15,))
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          margin: EdgeInsets.only(right: 10),
+                                          width: 10,
+                                          height: 10,
+                                          color: Color(0xffFA7B17),
+                                        ),
+                                        Text("Europa League Group Stage", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 15,))
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Container(
+                                          margin: EdgeInsets.only(right: 10),
+                                          width: 10,
+                                          height: 10,
+                                          color: Colors.red,
+                                        ),
+                                        Text("Relegation", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 15,))
+                                      ],
+                                    ),
+                                  ),
+                                  /*Container(
+                                    margin: EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text("MP - Matches Played", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 15,)),
+                                        Spacer(),
+                                        Text("W - Wins", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 15,)),
+                                        Spacer(),
+                                        Text("D - Draws", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 15,)),
+                                        
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.all(5.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Text("L - Lost", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 15,)),
+                                        Spacer(),
+                                        Text("Pts - Points", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 15,)),
+                                        Spacer(),
+                                        Text("GD - Goal Diffrence", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 15,))
+                                        
+                                      ],
+                                    ),
+                                  ),*/
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ),    
+                    ],
+                  ),
+                ) : SliverToBoxAdapter(),
               /*DataTable(
       columns: <DataColumn>[
         DataColumn(
@@ -1405,6 +1694,14 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
     });
     _refreshIndicatorKey.currentState?.show();
     await new Future.delayed(const Duration(seconds: 2));
+    round = 0;
+    rounds = 0;
+    roundsfirst = 0;
+    print(round);
+    firstround.clear();
+    scndround.clear();
+    firstrounds.clear();
+    scndrounds.clear();
     liveList.clear();
     scoreList.clear();
     scoreListr.clear();
@@ -1466,14 +1763,117 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
         Scores scoresr;
         //data.forEach((dat) =>
         for (var i = 0; i < data.length; i++) {
-          scores = new Scores(_data['api']['fixtures'][i]['fixture_id'], _data['api']['fixtures'][i]['homeTeam']['team_id'], _data['api']['fixtures'][i]['awayTeam']['team_id'], _data['api']['fixtures'][i]['league']['name'],_data['api']['fixtures'][i]['league']['logo'], _data['api']['fixtures'][i]['homeTeam']['team_name'], _data['api']['fixtures'][i]['awayTeam']['team_name'], _data['api']['fixtures'][i]['homeTeam']['logo'], _data['api']['fixtures'][i]['awayTeam']['logo'], _data['api']['fixtures'][i]['goalsHomeTeam'], _data['api']['fixtures'][i]['goalsAwayTeam'], _data['api']['fixtures'][i]['elapsed']);
+          if(data[i]['goalsHomeTeam'] == null && data[i]['goalsAwayTeam'] == null) {
+            print("NULLLLLLLLL");
+            if (data[i]['league']['name'] == 'Champions League' || data[i]['league']['name'] == 'Europa League') {
+              if (ucluelround.length == 0) {
+                ucluelround.add(data[i]['round']);
+                leag = data[i]['league']['name'];
+              }else {
+                if(ucluelround[ucluelround.length-1] != data[i]['round']) {
+                  ucluelround.add(data[i]['round']);
+                }
+              }
+              print(ucluelround);
+              rounds = ucluelround.length;
+            }else{
+              var ronds = data[i]['round'];
+              var rondSplits = ronds.split(" ");
+              rounds = int.parse(rondSplits[3]);
+              print("SSSSSSSSSSSSSS $rounds");
+              if(roundsfirst == 0){
+                roundsfirst = int.parse(rondSplits[3]);
+              }
+            }
+          }
+          var halft = data[i]['score']['halftime'];
+          var half = halft == null ? ['0', '0'] : halft.split("-");
+          scores = new Scores(_data['api']['fixtures'][i]['fixture_id'], _data['api']['fixtures'][i]['homeTeam']['team_id'], _data['api']['fixtures'][i]['awayTeam']['team_id'], _data['api']['fixtures'][i]['league']['name'],_data['api']['fixtures'][i]['league']['logo'], _data['api']['fixtures'][i]['homeTeam']['team_name'], _data['api']['fixtures'][i]['awayTeam']['team_name'], _data['api']['fixtures'][i]['homeTeam']['logo'], _data['api']['fixtures'][i]['awayTeam']['logo'], _data['api']['fixtures'][i]['goalsHomeTeam'], _data['api']['fixtures'][i]['goalsAwayTeam'], _data['api']['fixtures'][i]['elapsed'], int.parse(half[0]), int.parse(half[1]));
           scoreList.add(scores);
         }
 
         for (var i = 0; i < datar.length; i++) {
-          scoresr = new Scores(datar[i]['fixture_id'],datar[i]['homeTeam']['team_id'], datar[i]['awayTeam']['team_id'], datar[i]['league']['name'],datar[i]['league']['logo'], datar[i]['homeTeam']['team_name'], datar[i]['awayTeam']['team_name'], datar[i]['homeTeam']['logo'], datar[i]['awayTeam']['logo'], datar[i]['goalsHomeTeam'], datar[i]['goalsAwayTeam'], datar[i]['elapsed']);
+          if(datar[i]['goalsHomeTeam'] != null && datar[i]['goalsAwayTeam'] != null) {
+            if (datar[i]['league']['name'] == 'Champions League' || datar[i]['league']['name'] == 'Europa League') {
+              if (ucluelrounds.length == 0) {
+                ucluelrounds.add(datar[i]['round']);
+              }else {
+                if(ucluelrounds[ucluelrounds.length-1] != datar[i]['round']) {
+                  ucluelrounds.add(datar[i]['round']);
+                }
+              }
+              print(ucluelrounds);
+              round =ucluelrounds.length;
+            }else{
+              var rond = datar[i]['round'];
+              var rondSplit = rond.split(" ");
+              if(round == 0){
+                round = int.parse(rondSplit[3]);
+                print("RRRRRRRRRRRRRRR $round");
+              }
+            }
+          }
+          var halft = datar[i]['score']['halftime'];
+          var half = halft == null ? ['0', '0'] : halft.split("-");
+          scoresr = new Scores(datar[i]['fixture_id'],datar[i]['homeTeam']['team_id'], datar[i]['awayTeam']['team_id'], datar[i]['league']['name'],datar[i]['league']['logo'], datar[i]['homeTeam']['team_name'], datar[i]['awayTeam']['team_name'], datar[i]['homeTeam']['logo'], datar[i]['awayTeam']['logo'], datar[i]['goalsHomeTeam'], datar[i]['goalsAwayTeam'], datar[i]['elapsed'], int.parse(half[0]), int.parse(half[1]));
           scoreListr.add(scoresr);
         }
+
+        if(rounds == 1) {
+          for (var j = 0; j < datar.length; j++) {
+            if (data[j]['league']['name'] == 'Champions League' || data[j]['league']['name'] == 'Europa League') {
+                if(data[j]['goalsHomeTeam'] == null && data[j]['goalsAwayTeam'] == null && data[j]['round'] == ucluelround[0]) {
+                    firstrounds.add(data[j]['goalsAwayTeam']);
+                  }
+              }else {
+                if(data[j]['goalsHomeTeam'] == null && data[j]['goalsAwayTeam'] == null && data[j]['round'] == "Regular Season - 0") {
+                  print(roundsNo(0));
+                  firstrounds.add(data[j]['goalsAwayTeam']);
+                }
+              }
+            }
+            print(firstrounds);
+            scndrounds.add(firstrounds.length);
+          }else {
+            for (var m = roundsfirst; m <= rounds; m++) {
+            firstrounds.clear();
+            for (var j = 0; j < datar.length; j++) {
+              if (data[j]['league']['name'] == 'Champions League' || data[j]['league']['name'] == 'Europa League') {
+                if(data[j]['goalsHomeTeam'] == null && data[j]['goalsAwayTeam'] == null && data[j]['round'] == ucluelround[m]) {
+                    firstrounds.add(data[j]['goalsAwayTeam']);
+                  }
+              }else {
+                if(data[j]['goalsHomeTeam'] == null && data[j]['goalsAwayTeam'] == null && data[j]['round'] == "Regular Season - $m") {
+                  print(roundsNo(m));
+                  firstrounds.add(data[j]['goalsAwayTeam']);
+                }
+              }
+            }
+            print(firstrounds);
+            scndrounds.add(firstrounds.length);
+          }
+        }
+        print(scndrounds);
+
+        for (var m = 0; m < round; m++) {
+          firstround.clear();
+          for (var j = 0; j < datar.length; j++) {
+            if (data[j]['league']['name'] == 'Champions League' || data[j]['league']['name'] == 'Europa League') {
+              if(datar[j]['goalsHomeTeam'] != null && datar[j]['goalsAwayTeam'] != null && datar[j]['round'] == ucluelrounds[m]) {
+                  firstround.add(datar[j]['goalsAwayTeam']);
+                }
+            }else {
+              if(datar[j]['goalsHomeTeam'] != null && datar[j]['goalsAwayTeam'] != null && datar[j]['round'] == "Regular Season - ${roundNo(m)}") {
+                print(roundNo(m));
+                firstround.add(datar[j]['goalsAwayTeam']);
+              }
+            }
+          }
+          print(firstround);
+          scndround.add(firstround.length);
+        }
+        print(scndround);
+
         print("data****************: $data");
 
         
@@ -1559,6 +1959,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
   }
 }
 
+
 class Details extends StatefulWidget {
   final Scores passed;
   final List<LiveEvents> livee;
@@ -1577,7 +1978,7 @@ class _DetailsState extends State<Details> {
    int urllid;
    int inx = 0;
    double check = 0;
-   List datae, datallone, datalltwo;
+   List datae, datallone, datalltwo, datasone, datastwo;
    var resu;
    List goalh = [];
    List goala = [];
@@ -1586,6 +1987,8 @@ class _DetailsState extends State<Details> {
    List mutiple = [];
    List checked = [];
    int justChecked = 0;
+   List halfck = [];
+   List halfckn = [];
    //Map<String, String> _datap = {};
    List<Cards> carde = [];
    List<GoalCheck> goalt = [];
@@ -1743,6 +2146,13 @@ class _DetailsState extends State<Details> {
           return btime.compareTo(atime);
          });
          for (var i = 0; i < datae.length; i++) {
+           if(datae[i]['elapsed'] <= 45) {
+             halfck.add(datae[i]['elapsed']);
+           }
+           if(halfck.isEmpty){
+             halfckn.add(datae[datae.length-1]['elapsed']);
+           }
+           print(halfck);
            Cards cardd = new Cards(datae[i]['player_id']);
            datae[i]['detail'] == 'Red Card' ? carde.add(cardd) : null;
          }
@@ -1772,11 +2182,13 @@ class _DetailsState extends State<Details> {
          print(carde);
          datalone = line['api']['lineUps'][widget.passed.titlehome];
          datallone = datalone['startXI'];
+         datasone = datalone['substitutes'];
          var fhm = datalone['formation'];
          formhome = fhm.split("-");
          print(formhome);
          dataltwo = line['api']['lineUps'][widget.passed.titleaway];
          datalltwo = dataltwo['startXI'];
+         datastwo = dataltwo['substitutes'];
          var faw = dataltwo['formation'];
          formaway = faw.split("-");
          print(formaway);
@@ -1789,6 +2201,7 @@ class _DetailsState extends State<Details> {
    }
 
   int _cIndex = 0;
+  int _clIndex = 2;
   void _incrementTab(index) {
     setState(() {
       _cIndex = index;
@@ -1971,7 +2384,9 @@ class _DetailsState extends State<Details> {
               child: /*Padding(
                 padding: const EdgeInsets.only(left:16.0, top: 5.0, bottom: 3.0, right: 16.0,),
                 child:*/ id == widget.passed.team_idh ? 
-                datae.length != index && type == 'Card' && details == 'Red Card' && datae[incno(index)]['detail'] == 'Yellow Card' && datae[incno(index)]['elapsed'] == time && datae[incno(index)]['player_id'] == plid ?
+                index > 0 && type == 'Card' && details == 'Red Card' && datae[redno(index)]['detail'] == 'Yellow Card' && datae[redno(index)]['elapsed'] == time && datae[redno(index)]['player_id'] == plid ? SizedBox(height: 0,) 
+                 :
+                datae.length-1 != index && type == 'Card' && details == 'Red Card' && datae[incno(index)]['detail'] == 'Yellow Card' && datae[incno(index)]['elapsed'] == time && datae[incno(index)]['player_id'] == plid || datae.length-1 != index && type == 'Card' && details == 'Yellow Card' && datae[incno(index)]['detail'] == 'Red Card' && datae[incno(index)]['elapsed'] == time && datae[incno(index)]['player_id'] == plid ?
                   Column(
                     children: <Widget>[
                       Padding(
@@ -2216,10 +2631,14 @@ class _DetailsState extends State<Details> {
                     Divider(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black38 : Colors.white24, indent: 15.0, endIndent: 15.0,),
                   ],
                 )
-                 : datae.length != index && type == 'Card' && details == 'Red Card' && datae[incno(index)]['detail'] == 'Yellow Card' && datae[incno(index)]['elapsed'] == time && datae[incno(index)]['player_id'] == plid ?
+                 : index > 0 && type == 'Card' && details == 'Red Card' && datae[redno(index)]['detail'] == 'Yellow Card' && datae[redno(index)]['elapsed'] == time && datae[redno(index)]['player_id'] == plid ? SizedBox(height: 0,) 
+                 : 
+                 datae.length != index && type == 'Card' && details == 'Red Card' && datae[incno(index)]['detail'] == 'Yellow Card' && datae[incno(index)]['elapsed'] == time && datae[incno(index)]['player_id'] == plid || datae.length != index && type == 'Card' && details == 'Yellow Card' && datae[incno(index)]['detail'] == 'Red Card' && datae[incno(index)]['elapsed'] == time && datae[incno(index)]['player_id'] == plid ?
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       new Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           
                           
@@ -3778,7 +4197,37 @@ class _DetailsState extends State<Details> {
                        bottom: new BorderSide(width: 1.0, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black38 : Colors.white24),
                      ),
                     ),
-                    child: */widget.passed.home == null ? SizedBox(height: 0,) : ToggleButtons(
+                    child: */widget.passed.home == null ?
+                    datalone != null ? datalone.length == 0 && dataltwo.length == 0 ? SizedBox(height: 0,) 
+                    : ToggleButtons(
+                        fillColor: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.grey.shade300 : Color(0xff12233C),
+                        hoverColor: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.grey.shade300 : Color(0xff12233C),
+                        renderBorder: true,
+                        borderColor:Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Color(0xffF3F3F3) : Color(0xff0D141A),
+                        color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.grey : Colors.grey.shade300,
+                        selectedColor: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,
+                        children: <Widget>[
+                          Container(
+                            child: SizedBox(height: 0,),
+                          ),
+                          Container(
+                            child: SizedBox(height: 0,) ,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width/3.04,
+                            padding: EdgeInsets.fromLTRB(16.0, 18.0, 16.0,18.0),
+                            child: Text("Lineups", style: Theme.of(context).textTheme.title.copyWith(fontSize: 16.0), textAlign: TextAlign.center,),
+                          ),
+                        ],
+                        isSelected: [
+                          _clIndex == 0 ? false : false,
+                          _clIndex == 1 ? false : false,
+                          _clIndex == 2 ? true : false,
+                        ],
+                        onPressed: (index) {
+                        },
+                      ) : SizedBox(height: 0,) 
+                       : ToggleButtons(
                         fillColor: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.grey.shade300 : Color(0xff12233C),
                         hoverColor: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.grey.shade300 : Color(0xff12233C),
                         renderBorder: true,
@@ -3830,7 +4279,35 @@ class _DetailsState extends State<Details> {
                 ) : SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) => 
-                    eventCard(datae[index]['elapsed'], datae[index]['team_id'], datae[index]['player'], datae[index]['assist'], datae[index]['type'], datae[index]['detail'], index, datae[index]['player_id']),
+                    Column(
+                      children: <Widget>[
+                        halfck.isNotEmpty ? datae[index]['elapsed'] == halfck[0] && widget.passed.halfh != null && widget.passed.halfa != null ? Column(
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 1, 0, 1),
+                              width: MediaQuery.of(context).size.width,
+                              child: Text("Halftime ${widget.passed.halfh} - ${widget.passed.halfa}", style: TextStyle(fontSize: 16, fontFamily: 'RobotoMed', color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.center,)
+                            ),
+                            Divider(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black38 : Colors.white30, endIndent: 15, indent: 15,),
+                            eventCard(datae[index]['elapsed'], datae[index]['team_id'], datae[index]['player'], datae[index]['assist'], datae[index]['type'], datae[index]['detail'], index, datae[index]['player_id']),
+                          ],
+                        ) : 
+                        eventCard(datae[index]['elapsed'], datae[index]['team_id'], datae[index]['player'], datae[index]['assist'], datae[index]['type'], datae[index]['detail'], index, datae[index]['player_id']) 
+                        : datae[index]['elapsed'] == halfckn[0] && widget.passed.halfh != null && widget.passed.halfa != null ? Column(
+                          children: <Widget>[
+                            eventCard(datae[index]['elapsed'], datae[index]['team_id'], datae[index]['player'], datae[index]['assist'], datae[index]['type'], datae[index]['detail'], index, datae[index]['player_id']),
+                            Container(
+                              margin: EdgeInsets.fromLTRB(0, 1, 0, 1),
+                              width: MediaQuery.of(context).size.width,
+                              child: Text("Halftime ${widget.passed.halfh} - ${widget.passed.halfa}", style: TextStyle(fontSize: 16, fontFamily: 'RobotoMed', color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.center,)
+                            ),
+                            Divider(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black38 : Colors.white30, endIndent: 15, indent: 15,),
+                          ],
+                        ) : 
+                        eventCard(datae[index]['elapsed'], datae[index]['team_id'], datae[index]['player'], datae[index]['assist'], datae[index]['type'], datae[index]['detail'], index, datae[index]['player_id']),
+                        
+                      ],
+                    ),
                     childCount: datae.length
                   ),
                   ) : _cIndex == 1 && setwidth()==true ? datt == null  ? SliverToBoxAdapter(
@@ -3941,6 +4418,122 @@ class _DetailsState extends State<Details> {
                                       ],
                                     ),
                                   ),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: new Card(
+                                      elevation: 1.0,
+                                      margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width,
+                                          child: Column(
+                                            children: <Widget>[
+                                              Row(
+                                                children: <Widget>[
+                                                  Container(
+                                                    width: 40,
+                                                    height:40,
+                                                    child: Image.network(widget.passed.image, fit: BoxFit.contain,),
+                                                  ),
+                                                  Spacer(),
+                                                  Text("SUBSTITUTES", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,)),
+                                                  Spacer(),
+                                                  Container(
+                                                    width: 40,
+                                                    height:40,
+                                                    child: Image.network(widget.passed.img, fit: BoxFit.contain,),
+                                                  ),
+                                                ],
+                                              ),
+                                              datasone == null ?  SizedBox(height: 0,) : Container(
+                                                margin: EdgeInsets.only(top: 5),
+                                                child: Row(
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: <Widget>[
+                                                    Container(
+                                                      margin: EdgeInsets.all(3),
+                                                      height: ((datasone.length + datastwo.length)/2)*28,
+                                                      width: (MediaQuery.of(context).size.width/2)-24,
+                                                      child:ListView.builder(
+                                                        physics: NeverScrollableScrollPhysics(),
+                                                        itemCount: datasone.length,
+                                                        itemBuilder: (BuildContext context, int index) {
+                                                        return Container(
+                                                          margin: EdgeInsets.all(5),
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Container(width: 30, child: Text(datasone[index]['number'].toString(), style: TextStyle(fontSize: 16, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.center,)),
+                                                              Container(
+                                                                margin: EdgeInsets.only(left: 3),
+                                                                child: Text(datasone[index]['player'], style: TextStyle(fontSize: 16, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.left,))
+                                                            ],
+                                                          ),
+                                                        );
+                                                       },
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      margin: EdgeInsets.all(3),
+                                                      height: ((datasone.length + datastwo.length)/2)*28,
+                                                      width: (MediaQuery.of(context).size.width/2)-24,
+                                                      child:ListView.builder(
+                                                        physics: NeverScrollableScrollPhysics(),
+                                                        itemCount: datasone.length,
+                                                        itemBuilder: (BuildContext context, int index) {
+                                                        return Container(
+                                                          margin: EdgeInsets.all(5),
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.end,
+                                                            children: <Widget>[
+                                                              Container(
+                                                                margin: EdgeInsets.only(right: 3),
+                                                                child: Text(datastwo[index]['player'], style: TextStyle(fontSize: 16, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.right,)),
+                                                                Container(width: 30, child: Text(datastwo[index]['number'].toString(), style: TextStyle(fontSize: 16, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.center,)),
+                                                            ],
+                                                          ),
+                                                        );
+                                                       },
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Spacer(),
+                                                    Text("MANAGERS", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,)),
+                                                    Spacer()
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(top: 5),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Container(
+                                                        margin: EdgeInsets.all(5),
+                                                        child: Text(datalone['coach'], style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),),
+                                                      ),
+                                                      Spacer(),
+                                                      Container(
+                                                        margin: EdgeInsets.all(5),
+                                                        child: Text(dataltwo['coach'], style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,))
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                    ),
+                                  )
                                   ),
                                ],
                              ),
@@ -4073,7 +4666,7 @@ class _LiveDetailsState extends State<LiveDetails> with SingleTickerProviderStat
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKeyOne =new GlobalKey<RefreshIndicatorState>();
    final String urle = "https://api-football-v1.p.rapidapi.com/v2/fixtures/live/524-775-891-525-530-514-754-780-1063?timezone=Europe/London";
    Timer timer;
-   List data, dartae, datallone, datalltwo;
+   List data, dartae, datallone, datalltwo, datasone, datastwo;
    Map datastat, datstat, datalone, dataltwo, line;
    bool _showTitle = false;
    ScrollController _scrollController;
@@ -4178,86 +4771,86 @@ class _LiveDetailsState extends State<LiveDetails> with SingleTickerProviderStat
           datstat = jsonDecode(respond.body);
          datstat['api']['results'] == 0 ? datastat = null : datastat = datstat['api']['statistics'];
          results = datstat['api']['results'];
-         var bpph = datastat['Ball Possession']['home'];
-         var bppa = datastat['Ball Possession']['away'];
-         var shgh = datastat['Shots on Goal']['home'];
-         var shga = datastat['Shots on Goal']['away'];
-         var shogh = datastat['Shots off Goal']['home'];
-         var shoga = datastat['Shots off Goal']['away'];
-         var totsh = datastat['Total Shots']['home'];
-         var totsa = datastat['Total Shots']['away'];
-         var blksh = datastat['Blocked Shots']['home'];
-         var blksa = datastat['Blocked Shots']['away'];
-         var shtibh = datastat['Shots insidebox']['home'];
-         var shtiba = datastat['Shots insidebox']['away'];
-         var shtobh = datastat['Shots outsidebox']['home'];
-         var shtoba = datastat['Shots outsidebox']['away'];
-         var folh = datastat['Fouls']['home'];
-         var fola = datastat['Fouls']['away'];
-         var conkh = datastat['Corner Kicks']['home'];
-         var conka = datastat['Corner Kicks']['away'];
-         var offh = datastat['Offsides']['home'];
-         var offa = datastat['Offsides']['away'];
-         var ycrdh = datastat['Yellow Cards']['home'];
-         var ycrda = datastat['Yellow Cards']['away'];
-         var rcrdh = datastat['Red Cards']['home'];
-         var rcrda = datastat['Red Cards']['away'];
-         var golsh = datastat['Goalkeeper Saves']['home'];
-         var golsa = datastat['Goalkeeper Saves']['away'];
-         var topah = datastat['Total passes']['home'];
-         var topaa = datastat['Total passes']['away'];
-         var accuph = datastat['Passes accurate']['home'];
-         var accupa = datastat['Passes accurate']['away'];
-         var passph = datastat['Passes %']['home'];
-         var passpa = datastat['Passes %']['away'];
-         var acuh = passph.split("%");
-         var acua = passpa.split("%");
-         var tata = bpph.split("%");
-         var tatb = bppa.split("%");
-         //print(tata);
-         tata[0] == null ? bphn = 0 : bphn = double.parse(tata[0]);
-         tatb[0] == null ? bpan = 0 : bpan = double.parse(tatb[0]);
-         shgh == null ? sngnh = 0 : sngnh = double.parse(shgh);
-         shga == null ? sngna = 0 : sngna = double.parse(shga);
-         shogh == null ? sognh = 0 : sognh = double.parse(shogh);
-         shoga == null ? sogna = 0 : sogna = double.parse(shoga);
-         totsh == null ? tsnh = 0 : tsnh = double.parse(totsh);
-         print(tsnh);
-         totsa == null ? tsna = 0 : tsna = double.parse(totsa);
-         blksh == null ? bsnh = 0 : bsnh = double.parse(blksh);
-         blksa == null ? bsna = 0 : bsna = double.parse(blksa);
-         shtibh == null ? sibnh = 0 : sibnh = double.parse(shtibh);
-         shtiba == null ? sibna = 0 : sibna = double.parse(shtiba);
-         shtobh == null ? sobnh = 0 : sobnh = double.parse(shtobh);
-         shtoba == null ? sobna = 0 : sobna = double.parse(shtoba);
-         folh == null ? fnh = 0 : fnh = double.parse(folh);
-         fola == null ? fna = 0 : fna = double.parse(fola);
-         conkh == null ? cknh = 0 : cknh = double.parse(conkh);
-         conka == null ? ckna = 0 : ckna = double.parse(conka);
-         offh == null ? onh = 0 : onh = double.parse(offh);
-         offa == null ? ona = 0 : ona = double.parse(offa);
-         ycrdh == null ? ycnh = 0 : ycnh = double.parse(ycrdh);
-         ycrda == null ? ycnh = 0 : ycna = double.parse(ycrda);
-         ycrdh == null ? ycnhi = 0 : ycnhi = int.parse(ycrdh);
-         ycrda == null ? ycnai = 0 : ycnai = int.parse(ycrda);
-         rcrdh == null ? rcnh = 0 : rcnh = double.parse(rcrdh);
-         rcrda == null ? rcna = 0 : rcna = double.parse(rcrda);
-         rcrdh == null ? rcnhi = 0 : rcnhi = int.parse(rcrdh);
-         rcrda == null ? rcnai = 0 : rcnai = int.parse(rcrda);
-         golsh == null ? gksnh = 0 : gksnh = double.parse(golsh);
-         golsa == null ? gksna = 0 : gksna = double.parse(golsa);
-         topah == null ? tpnh = 0 : tpnh = double.parse(topah);
-         topaa == null ? tpna = 0 : tpna = double.parse(topaa);
-         accuph == null ? panh = 0 : panh = double.parse(accuph);
-         accupa == null ? pana = 0 : pana = double.parse(accupa);
-         accuph == null ? panhi = 0 : panhi = int.parse(accuph);
-         accupa == null ? panai = 0 : panai = int.parse(accupa);
-         passph == null || passph == "nan%" ? passacuh = 0 : passacuh = double.parse(acuh[0]);
-         passpa == null || passpa == "nan%" ? passacua = 0 : passacua = double.parse(acua[0]);
-         passph == null ? passacuhi = 0 : passacuhi = int.parse(acuh[0]);
-         passpa == null ? passacuai = 0 : passacuai = int.parse(acua[0]);
-
-        
+         if (datstat['api']['results'] != 0) {
+            var bpph = datastat['Ball Possession']['home'];
+            var bppa = datastat['Ball Possession']['away'];
+            var shgh = datastat['Shots on Goal']['home'];
+            var shga = datastat['Shots on Goal']['away'];
+            var shogh = datastat['Shots off Goal']['home'];
+            var shoga = datastat['Shots off Goal']['away'];
+            var totsh = datastat['Total Shots']['home'];
+            var totsa = datastat['Total Shots']['away'];
+            var blksh = datastat['Blocked Shots']['home'];
+            var blksa = datastat['Blocked Shots']['away'];
+            var shtibh = datastat['Shots insidebox']['home'];
+            var shtiba = datastat['Shots insidebox']['away'];
+            var shtobh = datastat['Shots outsidebox']['home'];
+            var shtoba = datastat['Shots outsidebox']['away'];
+            var folh = datastat['Fouls']['home'];
+            var fola = datastat['Fouls']['away'];
+            var conkh = datastat['Corner Kicks']['home'];
+            var conka = datastat['Corner Kicks']['away'];
+            var offh = datastat['Offsides']['home'];
+            var offa = datastat['Offsides']['away'];
+            var ycrdh = datastat['Yellow Cards']['home'];
+            var ycrda = datastat['Yellow Cards']['away'];
+            var rcrdh = datastat['Red Cards']['home'];
+            var rcrda = datastat['Red Cards']['away'];
+            var golsh = datastat['Goalkeeper Saves']['home'];
+            var golsa = datastat['Goalkeeper Saves']['away'];
+            var topah = datastat['Total passes']['home'];
+            var topaa = datastat['Total passes']['away'];
+            var accuph = datastat['Passes accurate']['home'];
+            var accupa = datastat['Passes accurate']['away'];
+            var passph = datastat['Passes %']['home'];
+            var passpa = datastat['Passes %']['away'];
+            var acuh = passph.split("%");
+            var acua = passpa.split("%");
+            var tata = bpph.split("%");
+            var tatb = bppa.split("%");
+            //print(tata);
+            tata[0] == null ? bphn = 0 : bphn = double.parse(tata[0]);
+            tatb[0] == null ? bpan = 0 : bpan = double.parse(tatb[0]);
+            shgh == null ? sngnh = 0 : sngnh = double.parse(shgh);
+            shga == null ? sngna = 0 : sngna = double.parse(shga);
+            shogh == null ? sognh = 0 : sognh = double.parse(shogh);
+            shoga == null ? sogna = 0 : sogna = double.parse(shoga);
+            totsh == null ? tsnh = 0 : tsnh = double.parse(totsh);
+            print(tsnh);
+            totsa == null ? tsna = 0 : tsna = double.parse(totsa);
+            blksh == null ? bsnh = 0 : bsnh = double.parse(blksh);
+            blksa == null ? bsna = 0 : bsna = double.parse(blksa);
+            shtibh == null ? sibnh = 0 : sibnh = double.parse(shtibh);
+            shtiba == null ? sibna = 0 : sibna = double.parse(shtiba);
+            shtobh == null ? sobnh = 0 : sobnh = double.parse(shtobh);
+            shtoba == null ? sobna = 0 : sobna = double.parse(shtoba);
+            folh == null ? fnh = 0 : fnh = double.parse(folh);
+            fola == null ? fna = 0 : fna = double.parse(fola);
+            conkh == null ? cknh = 0 : cknh = double.parse(conkh);
+            conka == null ? ckna = 0 : ckna = double.parse(conka);
+            offh == null ? onh = 0 : onh = double.parse(offh);
+            offa == null ? ona = 0 : ona = double.parse(offa);
+            ycrdh == null ? ycnh = 0 : ycnh = double.parse(ycrdh);
+            ycrda == null ? ycnh = 0 : ycna = double.parse(ycrda);
+            ycrdh == null ? ycnhi = 0 : ycnhi = int.parse(ycrdh);
+            ycrda == null ? ycnai = 0 : ycnai = int.parse(ycrda);
+            rcrdh == null ? rcnh = 0 : rcnh = double.parse(rcrdh);
+            rcrda == null ? rcna = 0 : rcna = double.parse(rcrda);
+            rcrdh == null ? rcnhi = 0 : rcnhi = int.parse(rcrdh);
+            rcrda == null ? rcnai = 0 : rcnai = int.parse(rcrda);
+            golsh == null ? gksnh = 0 : gksnh = double.parse(golsh);
+            golsa == null ? gksna = 0 : gksna = double.parse(golsa);
+            topah == null ? tpnh = 0 : tpnh = double.parse(topah);
+            topaa == null ? tpna = 0 : tpna = double.parse(topaa);
+            accuph == null ? panh = 0 : panh = double.parse(accuph);
+            accupa == null ? pana = 0 : pana = double.parse(accupa);
+            accuph == null ? panhi = 0 : panhi = int.parse(accuph);
+            accupa == null ? panai = 0 : panai = int.parse(accupa);
+            passph == null || passph == "nan%" ? passacuh = 0 : passacuh = double.parse(acuh[0]);
+            passpa == null || passpa == "nan%" ? passacua = 0 : passacua = double.parse(acua[0]);
+            passph == null ? passacuhi = 0 : passacuhi = int.parse(acuh[0]);
+            passpa == null ? passacuai = 0 : passacuai = int.parse(acua[0]);
+         }
        });
      }
      return "sucsses";
@@ -4276,14 +4869,24 @@ class _LiveDetailsState extends State<LiveDetails> with SingleTickerProviderStat
          line  = jsonDecode(resl.body);
          datalone = line['api']['lineUps'][widget.lived.titlehome];
          datallone = datalone['startXI'];
-         var fhm = datalone['formation'];
-         formhome = fhm.split("-");
-         print(formhome);
+         datasone = datalone['substitutes'];
+         print(datalone);
+         if (datallone != null) {
+          var fhm = datalone['formation'];
+          formhome = fhm.split("-");
+          print(formhome);
+         }
+         
          dataltwo = line['api']['lineUps'][widget.lived.titleaway];
          datalltwo = dataltwo['startXI'];
-         var faw = dataltwo['formation'];
-         formaway = faw.split("-");
-         print(formaway);
+         datastwo = dataltwo['substitutes'];
+         print(dataltwo);
+         if (datalltwo != null) {
+           var faw = dataltwo['formation'];
+          formaway = faw.split("-");
+          print(formaway);
+         }
+         
        });
      }
      return "Sucsses";
@@ -6324,7 +6927,12 @@ Widget eventCardL(int time, int id, String name, String assist, String type, Str
                     ),
                   )
                 :
-                SliverToBoxAdapter(
+                datallone == null || datalltwo == null ? SliverToBoxAdapter(
+              child: Container(height: MediaQuery.of(context).size.height*0.5,
+                child: new Center(child: Text("No Lineups Available"),
+                ) 
+                ),
+                ) : SliverToBoxAdapter(
                   child: Container(
                        //width: MediaQuery.of(context).size.width,
                        child: Stack(
@@ -6416,11 +7024,127 @@ Widget eventCardL(int time, int id, String name, String assist, String type, Str
                                         Spacer(),
                                         Container(
                                           child: Text(dataltwo['formation'], style: TextStyle(fontSize: 18),),
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
                                   ),
+                                  Container(
+                                          width: MediaQuery.of(context).size.width,
+                                          child: new Card(
+                                            elevation: 1.0,
+                                            margin: EdgeInsets.symmetric(horizontal: 0.0, vertical: 10.0),
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Container(
+                                                width: MediaQuery.of(context).size.width,
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Container(
+                                                          width: 40,
+                                                          height:40,
+                                                          child: Image.network(widget.lived.image, fit: BoxFit.contain,),
+                                                        ),
+                                                        Spacer(),
+                                                        Text("SUBSTITUTES", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,)),
+                                                        Spacer(),
+                                                        Container(
+                                                          width: 40,
+                                                          height:40,
+                                                          child: Image.network(widget.lived.img, fit: BoxFit.contain,),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    datasone == null ?  SizedBox(height: 0,) : Container(
+                                                      margin: EdgeInsets.only(top: 5),
+                                                      child: Row(
+                                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                                        children: <Widget>[
+                                                          Container(
+                                                            margin: EdgeInsets.all(3),
+                                                            height: ((datasone.length + datastwo.length)/2)*28,
+                                                            width: (MediaQuery.of(context).size.width/2)-24,
+                                                            child:ListView.builder(
+                                                              physics: NeverScrollableScrollPhysics(),
+                                                              itemCount: datasone.length,
+                                                              itemBuilder: (BuildContext context, int index) {
+                                                              return Container(
+                                                                margin: EdgeInsets.all(5),
+                                                                child: Row(
+                                                                  children: <Widget>[
+                                                                    Container(width: 30, child: Text(datasone[index]['number'].toString(), style: TextStyle(fontSize: 16, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.center,)),
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(left: 3),
+                                                                      child: Text(datasone[index]['player'], style: TextStyle(fontSize: 16, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.left,))
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            },
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            margin: EdgeInsets.all(3),
+                                                            height: ((datasone.length + datastwo.length)/2)*28,
+                                                            width: (MediaQuery.of(context).size.width/2)-24,
+                                                            child:ListView.builder(
+                                                              physics: NeverScrollableScrollPhysics(),
+                                                              itemCount: datasone.length,
+                                                              itemBuilder: (BuildContext context, int index) {
+                                                              return Container(
+                                                                margin: EdgeInsets.all(5),
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                                  children: <Widget>[
+                                                                    Container(
+                                                                      margin: EdgeInsets.only(right: 3),
+                                                                      child: Text(datastwo[index]['player'], style: TextStyle(fontSize: 16, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.right,)),
+                                                                      Container(width: 30, child: Text(datastwo[index]['number'].toString(), style: TextStyle(fontSize: 16, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,),textAlign: TextAlign.center,)),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            },
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Spacer(),
+                                                          Text("MANAGERS", style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,)),
+                                                          Spacer()
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      margin: EdgeInsets.only(top: 5),
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.all(8.0),
+                                                        child: Row(
+                                                          children: <Widget>[
+                                                            Container(
+                                                              margin: EdgeInsets.all(5),
+                                                              child: Text(datalone['coach'], style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,)),
+                                                            ),
+                                                            Spacer(),
+                                                            Container(
+                                                              margin: EdgeInsets.all(5),
+                                                              child: Text(dataltwo['coach'], style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,)),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                          ),
+                                        )
+                                        ),
                                ],
                              ),
                            ),
