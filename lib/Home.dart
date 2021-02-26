@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
     //backgroundColor: dark ? Color(0xff252F38) : Color(0xffF3F3F3),
     items:  <BottomNavigationBarItem>[
       BottomNavigationBarItem(
-              icon: new Icon(FontAwesomeIcons.listAlt), /*new Image.asset("assets/house.png")*/
+              icon: new Icon(FontAwesomeIcons.listAlt), /*new Image.asset("assets/images/house.png")*/
               title: AnimatedContainer(
                 margin: EdgeInsets.only(top: 5),
                 duration: const Duration(milliseconds: 200),
@@ -155,7 +155,7 @@ class _HomeState extends State<Home> {
           backgroundColor: dark ? Color(0xff252F38) : Color(0xffF3F3F3),
           items: [
             BottomNavigationBarItem(
-              icon: new Icon(FontAwesomeIcons.listAlt), /*new Image.asset("assets/house.png")*/
+              icon: new Icon(FontAwesomeIcons.listAlt), /*new Image.asset("assets/images/house.png")*/
               title: Text("")
             ),
             BottomNavigationBarItem(
@@ -188,29 +188,29 @@ class _HomeState extends State<Home> {
 
               children: <Widget>[
                 new IconButton(
-                  icon: new Image.asset("assets/house.png"),
+                  icon: new Image.asset("assets/images/house.png"),
                   iconSize: 40,
                   color: Colors.black,
 
                   onPressed: _home,
                 ),
                 new IconButton(
-                  icon: new Image.asset("assets/newspaper.png"),
+                  icon: new Image.asset("assets/images/newspaper.png"),
                   iconSize: 40,
                   color: Colors.black,
                 ),
                 new IconButton(
-                  icon: new Image.asset("assets/football.png"),
+                  icon: new Image.asset("assets/images/football.png"),
                   iconSize: 40,
                   color: Colors.black,
                 ),
                 new IconButton(
-                  icon: new Image.asset("assets/stat.png"),
+                  icon: new Image.asset("assets/images/stat.png"),
                   iconSize: 40,
                   color: Colors.black,
                 ),
                 new IconButton(
-                  icon: new Image.asset("assets/more.png"),
+                  icon: new Image.asset("assets/images/more.png"),
                   iconSize: 40,
                   color: Colors.black,
                 )

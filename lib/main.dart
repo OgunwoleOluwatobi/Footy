@@ -74,10 +74,10 @@ import 'ThemeNotifier.dart';
    Widget build(BuildContext context) {
      //Provider.of<ThemeNotifier>(context).loadThemeData(context);
 
-     var logoUri = new AssetImage('assets/logo.png');
+     var logoUri = new AssetImage('assets/images/logo.png');
      var logoImage = new Image(image: logoUri, height: 250.0,);
 
-     //var ballsUri = new AssetImage('assets/balls.png');
+     //var ballsUri = new AssetImage('assets/images/balls.png');
      //var ballsImage = new Image(image: ballsUri, height: 148.0,);
      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

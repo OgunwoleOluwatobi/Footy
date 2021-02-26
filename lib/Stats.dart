@@ -48,7 +48,7 @@ class _StatsState extends State<Stats> {
   @override
   Widget build(BuildContext context) {
 
-      var ply_uri = new AssetImage('assets/vardy.png');
+      var ply_uri = new AssetImage('assets/images/vardy.png');
       var ply_img = new Image(image: ply_uri, height: 140.0);
 
         Widget title = new Container(
@@ -57,7 +57,7 @@ class _StatsState extends State<Stats> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             /*Image.asset(
-              'assets/logo.png',
+              'assets/images/logo.png',
               height: 92.0,
               width: 62.0,
               //alignment: Alignment(13, 8),
@@ -83,7 +83,7 @@ class _StatsState extends State<Stats> {
       brightness: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Brightness.light : Brightness.dark,
       backgroundColor: Colors.transparent,
       title: title,
-      leading: Image.asset('assets/logo.png',
+      leading: Image.asset('assets/images/logo.png',
               height: 92.0,
               width: 62.0, alignment: Alignment(7, 8)),
     );
@@ -102,7 +102,7 @@ class _StatsState extends State<Stats> {
                     topRight: Radius.circular(10.0),
                   ),
                   image: DecorationImage(
-                    image: AssetImage('assets/vardy.png'),
+                    image: AssetImage('assets/images/vardy.png'),
                     fit: BoxFit.fitHeight,
                   ),
                 ),

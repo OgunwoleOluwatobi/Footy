@@ -119,7 +119,7 @@ class _UploadState extends State<Upload> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             /*Image.asset(
-              'assets/logo.png',
+              'assets/images/logo.png',
               height: 92.0,
               width: 62.0,
               //alignment: Alignment(13, 8),
@@ -145,7 +145,7 @@ class _UploadState extends State<Upload> {
       backgroundColor: Colors.transparent,
       brightness: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Brightness.light : Brightness.dark,
       title: title,
-      leading: Image.asset('assets/logo.png',
+      leading: Image.asset('assets/images/logo.png',
               height: 92.0,
               width: 62.0, alignment: Alignment(7, 8)),
     );

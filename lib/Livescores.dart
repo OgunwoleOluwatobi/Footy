@@ -460,7 +460,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
 
-    //var logoUri = new AssetImage('assets/small.png');
+    //var logoUri = new AssetImage('assets/images/small.png');
      //var logoImage = new Image(image: logoUri);
      
 
@@ -470,7 +470,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             /*Image.asset(
-              'assets/logo.png',
+              'assets/images/logo.png',
               height: 92.0,
               width: 62.0,
               //alignment: Alignment(13, 8),
@@ -497,7 +497,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                         height: 40,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: dattta == null ? AssetImage('assets/fill.png') : dattta[0]['name'] == 'Premier League' ? Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/prem_black.png') : AssetImage('assets/permier_white.png') : dattta[0]['name'] == 'Champions League' ? Theme.of(context).scaffoldBackgroundColor != Color(0xffF3F3F3) ? AssetImage('assets/ucl_white.png') : NetworkImage(dattta[0]['logo']) :  NetworkImage(dattta[0]['logo']),//NetworkImage(dattta[0]['logo']),
+                              image: dattta == null ? AssetImage('assets/images/fill.png') : dattta[0]['name'] == 'Premier League' ? Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/images/prem_black.png') : AssetImage('assets/images/permier_white.png') : dattta[0]['name'] == 'Champions League' ? Theme.of(context).scaffoldBackgroundColor != Color(0xffF3F3F3) ? AssetImage('assets/images/ucl_white.png') : NetworkImage(dattta[0]['logo']) :  NetworkImage(dattta[0]['logo']),//NetworkImage(dattta[0]['logo']),
                               fit: BoxFit.contain
                             ),
                           )
@@ -524,7 +524,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       brightness: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Brightness.light : Brightness.dark,
       backgroundColor: Colors.transparent,
       title: title,
-      leading: Image.asset('assets/logo.png', height: 90.0, width: 60.0, alignment: Alignment(5, 8)),
+      leading: Image.asset('assets/images/logo.png', height: 90.0, width: 60.0, alignment: Alignment(5, 8)),
     );
 
     Widget resultCard(String titlehome, int scorehome, String titleaway, int scoreway, int time, int index, List letv){
@@ -2206,7 +2206,7 @@ class _DetailsState extends State<Details> {
                         height: 50,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? NetworkImage(widget.passed.logo) : AssetImage('assets/permier_white.png'),
+                            image: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? NetworkImage(widget.passed.logo) : AssetImage('assets/images/permier_white.png'),
                             fit: BoxFit.contain
                           ),
                         )
@@ -2386,7 +2386,7 @@ class _DetailsState extends State<Details> {
                                       child: Padding(
                                           padding: EdgeInsets.all(6),
                                           child: Image(
-                                                image: AssetImage('assets/double_yellow.png'),
+                                                image: AssetImage('assets/images/double_yellow.png'),
                                                 fit: BoxFit.contain,
                                               ),
                                           ),
@@ -2473,31 +2473,31 @@ class _DetailsState extends State<Details> {
                                         child: type == 'Card' ? 
                                           details == 'Yellow Card' ?
                                             Image(
-                                              image: AssetImage('assets/yellow.png'),
+                                              image: AssetImage('assets/images/yellow.png'),
                                               fit: BoxFit.contain,
                                             ) : details == 'Red Card' ? Image(
-                                              image: AssetImage('assets/red.png'),
+                                              image: AssetImage('assets/images/red.png'),
                                               fit: BoxFit.contain,
                                             ) : null
                                         :
                                           type == 'Goal' ?
                                             details == 'Normal Goal' ? 
                                               Image(
-                                                image: AssetImage('assets/goal.png'),
+                                                image: AssetImage('assets/images/goal.png'),
                                                 fit: BoxFit.contain,
                                               ) : details == 'Own Goal' ? Image(
-                                              image: AssetImage('assets/own_goal.png'),
+                                              image: AssetImage('assets/images/own_goal.png'),
                                               fit: BoxFit.contain,
                                             ) : details == 'Missed Penalty' ? Image(
-                                              image: AssetImage('assets/pen_missed.png'),
+                                              image: AssetImage('assets/images/pen_missed.png'),
                                               fit: BoxFit.contain,
                                             ) : Image(
-                                              image: AssetImage('assets/pen_scored.png'),
+                                              image: AssetImage('assets/images/pen_scored.png'),
                                               fit: BoxFit.contain,
                                             )
                                           :
                                             Image(
-                                                image: AssetImage('assets/subst.png'),
+                                                image: AssetImage('assets/images/subst.png'),
                                                 fit: BoxFit.contain,
                                               )
                                         ),
@@ -2602,7 +2602,7 @@ class _DetailsState extends State<Details> {
                                     child: Padding(
                                         padding: EdgeInsets.all(6),
                                         child: Image(
-                                              image: AssetImage('assets/double_yellow.png'),
+                                              image: AssetImage('assets/images/double_yellow.png'),
                                               fit: BoxFit.contain,
                                             ),
                                         ),
@@ -2747,31 +2747,31 @@ class _DetailsState extends State<Details> {
                                         child: type == 'Card' ? 
                                           details == 'Yellow Card' ?
                                             Image(
-                                              image: AssetImage('assets/yellow.png'),
+                                              image: AssetImage('assets/images/yellow.png'),
                                               fit: BoxFit.contain,
                                             ) : details == 'Red Card' ? Image(
-                                              image: AssetImage('assets/red.png'),
+                                              image: AssetImage('assets/images/red.png'),
                                               fit: BoxFit.contain,
                                             ) : null
                                         :
                                           type == 'Goal' ?
                                             details == 'Normal Goal' ? 
                                               Image(
-                                                image: AssetImage('assets/goal.png'),
+                                                image: AssetImage('assets/images/goal.png'),
                                                 fit: BoxFit.contain,
                                               ) : details == 'Own Goal' ? Image(
-                                              image: AssetImage('assets/own_goal.png'),
+                                              image: AssetImage('assets/images/own_goal.png'),
                                               fit: BoxFit.contain,
                                             ) : details == 'Missed Penalty' ? Image(
-                                              image: AssetImage('assets/pen_missed.png'),
+                                              image: AssetImage('assets/images/pen_missed.png'),
                                               fit: BoxFit.contain,
                                             ) : Image(
-                                              image: AssetImage('assets/pen_scored.png'),
+                                              image: AssetImage('assets/images/pen_scored.png'),
                                               fit: BoxFit.contain,
                                             )
                                           :
                                             Image(
-                                                image: AssetImage('assets/subst.png'),
+                                                image: AssetImage('assets/images/subst.png'),
                                                 fit: BoxFit.contain,
                                               )
                                         ),
@@ -3849,7 +3849,7 @@ class _DetailsState extends State<Details> {
                           height: 50,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: widget.passed.league == 'Premier League' ? Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/prem_black.png') : AssetImage('assets/permier_white.png') : NetworkImage(widget.passed.logo),
+                              image: widget.passed.league == 'Premier League' ? Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/images/prem_black.png') : AssetImage('assets/images/permier_white.png') : NetworkImage(widget.passed.logo),
                               fit: BoxFit.contain
                             ),
                           )
@@ -4043,7 +4043,7 @@ class _DetailsState extends State<Details> {
                               width: 20,
                               height: 20,
                               child: Image(
-                                image: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/black_ball.png') : AssetImage('assets/white_ball.png') ,
+                                image: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/images/black_ball.png') : AssetImage('assets/images/white_ball.png') ,
                                 fit: BoxFit.contain,
                               ),
                             ),
@@ -4905,7 +4905,7 @@ class _LiveDetailsState extends State<LiveDetails> with SingleTickerProviderStat
                         height: 50,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? NetworkImage(widget.lived.logo) : AssetImage('assets/permier_white.png'),
+                            image: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? NetworkImage(widget.lived.logo) : AssetImage('assets/images/permier_white.png'),
                             fit: BoxFit.contain
                           ),
                         )
@@ -5019,7 +5019,7 @@ Widget eventCardL(int time, int id, String name, String assist, String type, Str
                                       child: Padding(
                                           padding: EdgeInsets.all(6),
                                           child: Image(
-                                                image: AssetImage('assets/double_yellow.png'),
+                                                image: AssetImage('assets/images/double_yellow.png'),
                                                 fit: BoxFit.contain,
                                               ),
                                           ),
@@ -5106,31 +5106,31 @@ Widget eventCardL(int time, int id, String name, String assist, String type, Str
                                         child: type == 'Card' ? 
                                           details == 'Yellow Card' ?
                                             Image(
-                                              image: AssetImage('assets/yellow.png'),
+                                              image: AssetImage('assets/images/yellow.png'),
                                               fit: BoxFit.contain,
                                             ) : details == 'Red Card' ? Image(
-                                              image: AssetImage('assets/red.png'),
+                                              image: AssetImage('assets/images/red.png'),
                                               fit: BoxFit.contain,
                                             ) : null
                                         :
                                           type == 'Goal' ?
                                             details == 'Normal Goal' ? 
                                               Image(
-                                                image: AssetImage('assets/goal.png'),
+                                                image: AssetImage('assets/images/goal.png'),
                                                 fit: BoxFit.contain,
                                               ) : details == 'Own Goal' ? Image(
-                                              image: AssetImage('assets/own_goal.png'),
+                                              image: AssetImage('assets/images/own_goal.png'),
                                               fit: BoxFit.contain,
                                             ) : details == 'Missed Penalty' ? Image(
-                                              image: AssetImage('assets/pen_missed.png'),
+                                              image: AssetImage('assets/images/pen_missed.png'),
                                               fit: BoxFit.contain,
                                             ) : Image(
-                                              image: AssetImage('assets/pen_scored.png'),
+                                              image: AssetImage('assets/images/pen_scored.png'),
                                               fit: BoxFit.contain,
                                             )
                                           :
                                             Image(
-                                                image: AssetImage('assets/subst.png'),
+                                                image: AssetImage('assets/images/subst.png'),
                                                 fit: BoxFit.contain,
                                               )
                                         ),
@@ -5237,7 +5237,7 @@ Widget eventCardL(int time, int id, String name, String assist, String type, Str
                                       child: Padding(
                                           padding: EdgeInsets.all(6),
                                           child: Image(
-                                                image: AssetImage('assets/double_yellow.png'),
+                                                image: AssetImage('assets/images/double_yellow.png'),
                                                 fit: BoxFit.contain,
                                               ),
                                           ),
@@ -5383,31 +5383,31 @@ Widget eventCardL(int time, int id, String name, String assist, String type, Str
                                         child: type == 'Card' ? 
                                           details == 'Yellow Card' ?
                                             Image(
-                                              image: AssetImage('assets/yellow.png'),
+                                              image: AssetImage('assets/images/yellow.png'),
                                               fit: BoxFit.contain,
                                             ) : details == 'Red Card' ? Image(
-                                              image: AssetImage('assets/red.png'),
+                                              image: AssetImage('assets/images/red.png'),
                                               fit: BoxFit.contain,
                                             ) : null
                                         :
                                           type == 'Goal' ?
                                             details == 'Normal Goal' ? 
                                               Image(
-                                                image: AssetImage('assets/goal.png'),
+                                                image: AssetImage('assets/images/goal.png'),
                                                 fit: BoxFit.contain,
                                               ) : details == 'Own Goal' ? Image(
-                                              image: AssetImage('assets/own_goal.png'),
+                                              image: AssetImage('assets/images/own_goal.png'),
                                               fit: BoxFit.contain,
                                             ) : details == 'Missed Penalty' ? Image(
-                                              image: AssetImage('assets/pen_missed.png'),
+                                              image: AssetImage('assets/images/pen_missed.png'),
                                               fit: BoxFit.contain,
                                             ) : Image(
-                                              image: AssetImage('assets/pen_scored.png'),
+                                              image: AssetImage('assets/images/pen_scored.png'),
                                               fit: BoxFit.contain,
                                             )
                                           :
                                             Image(
-                                                image: AssetImage('assets/subst.png'),
+                                                image: AssetImage('assets/images/subst.png'),
                                                 fit: BoxFit.contain,
                                               )
                                         ),
@@ -6493,7 +6493,7 @@ Widget eventCardL(int time, int id, String name, String assist, String type, Str
                           height: 50,
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: widget.lived.league == 'Premier League' ? Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/prem_black.png') : AssetImage('assets/permier_white.png') : NetworkImage(widget.lived.logo),
+                              image: widget.lived.league == 'Premier League' ? Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/images/prem_black.png') : AssetImage('assets/images/permier_white.png') : NetworkImage(widget.lived.logo),
                               fit: BoxFit.contain
                             ),
                           )
@@ -6718,7 +6718,7 @@ Widget eventCardL(int time, int id, String name, String assist, String type, Str
                               width: 20,
                               height: 20,
                               child: Image(
-                                image: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/black_ball.png') : AssetImage('assets/white_ball.png') ,
+                                image: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? AssetImage('assets/images/black_ball.png') : AssetImage('assets/images/white_ball.png') ,
                                 fit: BoxFit.contain,
                               ),
                             ),

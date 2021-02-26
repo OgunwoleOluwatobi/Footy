@@ -186,7 +186,7 @@ class _HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
 
-     //var logoUri = new AssetImage('assets/small.png');
+     //var logoUri = new AssetImage('assets/images/small.png');
      //var logoImage = new Image(image: logoUri);
      /*SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: Color(0xff0D141A),
@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage>{
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Image.asset(
-              'assets/logo.png',
+              'assets/images/logo.png',
               height: 62.0,
               width: 62.0,
               //alignment: Alignment(x, y),
@@ -499,7 +499,7 @@ class _HomePageState extends State<HomePage>{
             left: 10,
             width: 60,
             height: 70,
-            child: Image.asset('assets/small.png'),
+            child: Image.asset('assets/images/small.png'),
           ),
           Align(
             alignment: Alignment.topLeft,
@@ -553,7 +553,7 @@ class PicCarousel extends StatefulWidget {
           //decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10.0))),
           child: ClipRRect(
             //borderRadius: BorderRadius.all(Radius.circular(10)),
-            child: Image.asset("assets/$assetName", height: 250, fit: BoxFit.contain)),
+            child: Image.asset("assets/images/$assetName", height: 250, fit: BoxFit.contain)),
         );
       }).toList();
       static List<T> _map<T>(List list, Function handler) {
@@ -672,7 +672,7 @@ class PicCarousel extends StatefulWidget {
         children: <Widget>[
           IconButton(icon: Icon(Icons.arrow_back), onPressed: (){Navigator.pop(context);},),
           SizedBox(width: 10.0,),
-          Image.asset('assets/logo.png',
+          Image.asset('assets/images/logo.png',
               height: 92.0,
               width: 62.0, alignment: Alignment(7, 8)),
         ],
