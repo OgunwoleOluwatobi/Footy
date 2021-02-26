@@ -10,8 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'Posts.dart';
-import 'string_extension.dart';
+import 'app/core/models/Posts.dart';
+import 'app/core/extensions/string_extension.dart';
 
 
 /*void main() => runApp(MaterialApp(

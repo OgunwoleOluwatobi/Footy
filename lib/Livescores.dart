@@ -7,19 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:footyappp/Cards.dart';
-import 'package:footyappp/GoalCheck.dart';
+import 'package:footyappp/app/core/models/Cards.dart';
+import 'package:footyappp/app/core/models/GoalCheck.dart';
 import 'package:footyappp/LineupHome.dart';
-import 'package:footyappp/Live.dart';
-import 'package:footyappp/LiveEvents.dart';
-import 'package:footyappp/Scores.dart';
-import 'package:footyappp/Standing.dart';
+import 'package:footyappp/app/core/models/Live.dart';
+import 'package:footyappp/app/core/models/LiveEvents.dart';
+import 'package:footyappp/app/core/models/Scores.dart';
+import 'package:footyappp/app/core/models/Standing.dart';
 import 'package:http/http.dart' as http;
 import 'package:palette_generator/palette_generator.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
-import 'CardL.dart';
-import 'GoalCheckL.dart';
+import 'app/core/models/CardL.dart';
+import 'app/core/models/GoalCheckL.dart';
 import 'LineupAway.dart';
 
 class Livescores extends StatefulWidget {
