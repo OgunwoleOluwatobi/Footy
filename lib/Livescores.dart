@@ -190,63 +190,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
     Navigator.push(context, MaterialPageRoute(builder: (context) => Details(passed: scoreListr[index], livee: liveEventList, palette: _paletteGenerator, paletteOne: _paletteGeneratorOne)));
   }
 
-  /*Future<Null> _refreshLeague() async {
-        await new Future.delayed(const Duration(seconds: 2));
-        scoreList.clear();
-        _data.clear();
-        dattta.clear();
-        datttta.clear();
-        var response = await http.get(
-          Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/fixtures/league/$urlid?timezone=Europe/London'),
-          headers: {
-            "Accept": "application/json",
-            "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
-            }
-        );
-        var responses = await http.get(
-          Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/leagueTable/$urlid'),
-          headers: {
-            "Accept": "application/json",
-            "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
-            }
-        );
-        var restwo = await http.get(
-          Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/leagues/league/$urlid'),
-          headers: {
-            "Accept": "application/json",
-            "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"
-            }
-        );
-
-        setState(() {
-          print("From refresh $response.body");
-          print("From refresh $responses.body");
-          print("From refresh $restwo.body");
-          setState(() {
-            var convertDataToJsontwo = jsonDecode(restwo.body);
-            var convertDataToJsonthree = jsonDecode(responses.body);
-            _data = jsonDecode(response.body);
-            print("This id the data......$_data");
-            //var convertDataToJsonone = jsonDecode(resone.body);
-            data = _data['api']['fixtures'];
-            Scores scores;
-            //data.forEach((dat) =>
-            for (var i = 0; i < data.length; i++) {
-              scores = new Scores(_data['api']['fixtures'][i]['league']['name'],_data['api']['fixtures'][i]['league']['logo'], _data['api']['fixtures'][i]['homeTeam']['team_name'], _data['api']['fixtures'][i]['awayTeam']['team_name'], _data['api']['fixtures'][i]['homeTeam']['logo'], _data['api']['fixtures'][i]['awayTeam']['logo'], _data['api']['fixtures'][i]['goalsHomeTeam'], _data['api']['fixtures'][i]['goalsAwayTeam'], _data['api']['fixtures'][i]['elapsed']);
-              scoreList.add(scores);
-            }
-            print("data****************: $data");
-
-            
-            dattta = convertDataToJsontwo['api']['leagues'];
-            print('@@@@@@: $dattta.length');
-            datttta = convertDataToJsonthree['api']['standings'][0];
-            print('###############: $datttta.length');
-          });
-          return "Sucsses";
-        });
-
-      }*/
+ 
 
   onChangedDropdownItem(Leagues selectedLeagues) {
     setState(() {
@@ -262,7 +206,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/fixtures/league/$urlid?timezone=Europe/London'),
       headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
+        "x-rapidapi-key": "YOUR-API-KEY"
         }
     );
 
@@ -270,23 +214,15 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/leagueTable/$urlid'),
       headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
+        "x-rapidapi-key": "YOUR-API-KEY"
         }
     );
-
-    /*var resone = await http.get(
-      Uri.encodeFull(urli),
-      headers: {
-        "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"
-        }
-    );*/
 
     var restwo = await http.get(
       Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/leagues/league/$urlid'),
       headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"
+        "x-rapidapi-key": "YOUR-API-KEY"
         }
     );
 
@@ -429,7 +365,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       Uri.encodeFull(urli),
       headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"
+        "x-rapidapi-key": "YOUR-API-KEY"
         }
     );
     print(resone.body);
@@ -1715,28 +1651,28 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       Uri.encodeFull(urli),
       headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"
+        "x-rapidapi-key": "YOUR-API-KEY"
       }
     );
     var response = await http.get(
           Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/fixtures/league/$urlid?timezone=Europe/London'),
           headers: {
             "Accept": "application/json",
-            "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
+            "x-rapidapi-key": "YOUR-API-KEY"
             }
         );
         var responses = await http.get(
           Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/leagueTable/$urlid'),
           headers: {
             "Accept": "application/json",
-            "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
+            "x-rapidapi-key": "YOUR-API-KEY"
             }
         );
         var restwo = await http.get(
           Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/leagues/league/$urlid'),
           headers: {
             "Accept": "application/json",
-            "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"
+            "x-rapidapi-key": "YOUR-API-KEY"
             }
         );
     setState(() {
@@ -2020,7 +1956,7 @@ class _DetailsState extends State<Details> {
        Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/statistics/fixture/$urllid'),
        headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
+        "x-rapidapi-key": "YOUR-API-KEY"
       }
      );
 
@@ -2028,7 +1964,7 @@ class _DetailsState extends State<Details> {
        Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/events/$urllid'),
        headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
+        "x-rapidapi-key": "YOUR-API-KEY"
       }
      );
 
@@ -2036,7 +1972,7 @@ class _DetailsState extends State<Details> {
        Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/lineups/$urllid'),
        headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
+        "x-rapidapi-key": "YOUR-API-KEY"
       }
      );
 
@@ -4758,7 +4694,7 @@ class _LiveDetailsState extends State<LiveDetails> with SingleTickerProviderStat
        Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/statistics/fixture/$urls'),
        headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
+        "x-rapidapi-key": "YOUR-API-KEY"
       }
      );
 
@@ -4861,7 +4797,7 @@ class _LiveDetailsState extends State<LiveDetails> with SingleTickerProviderStat
        Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/lineups/$urls'),
        headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "c663411911mshbe8401af4beb2e7p102e62jsnc2f7246ea6f6"//a0738fcae1mshd365df0b4191573p114144jsncc8e27163125
+        "x-rapidapi-key": "YOUR-API-KEY"
       }
      );
      if(this.mounted){
