@@ -9,20 +9,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:footyappp/views/widgets/utility_widgets.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'app/core/models/Posts.dart';
 import 'app/core/extensions/string_extension.dart';
-
-
-/*void main() => runApp(MaterialApp(
-   home: HomePage(),
-   debugShowCheckedModeBanner: false,
-   theme: new ThemeData(
-     primaryColor: Color(0xffF3F3F3),
-     brightness: Brightness.dark
-   ),
-  ),
- );*/
 
 class HomePage extends StatefulWidget {
   const HomePage({Key key}) : super(key: key);
@@ -96,7 +87,7 @@ class _HomePageState extends State<HomePage>{
     
     _configureFirebaseListeners();
     DatabaseReference postRef = FirebaseDatabase.instance.reference().child("Posts");
-    postRef.orderByChild("index").limitToFirst(5).onChildAdded.listen((Event event){
+    postRef.orderByChild('Timestamp').limitToFirst(5).onChildAdded.listen((Event event){
       //var keys = event.snapshot.value.keys;
       Map<dynamic, dynamic> data = event.snapshot.value;
       //var no = DATA.sort((a,b)=>a.value['title'].compareTo(b.value['title']));
@@ -136,7 +127,7 @@ class _HomePageState extends State<HomePage>{
   
   @override
   void dispose() {
-    _scrollController.dispose();
+    // _scrollController.dispose();
     super.dispose();
   }
 
@@ -146,7 +137,7 @@ class _HomePageState extends State<HomePage>{
       if (lastPost < -1) {
         print("here");
         DatabaseReference postRef = FirebaseDatabase.instance.reference().child("Posts");
-        postRef.orderByChild('index').startAt(lastPost+1).limitToFirst(5).onChildAdded.listen((Event event){
+        postRef.orderByChild('Timestamp').startAt(lastPost+1).limitToFirst(5).onChildAdded.listen((Event event){
           Map<dynamic, dynamic> data = event.snapshot.value;
           lastPost = data['index'];
             Posts posts = new Posts(
@@ -186,63 +177,12 @@ class _HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
 
-     //var logoUri = new AssetImage('assets/images/small.png');
-     //var logoImage = new Image(image: logoUri);
-     /*SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Color(0xff0D141A),
-      statusBarIconBrightness: Brightness.light,
-      ));*/
-
-    
-      Widget title = new Container(
-        margin: EdgeInsets.only(left: 3, top: 5, bottom: 6),
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Image.asset(
-              'assets/images/logo.png',
-              height: 62.0,
-              width: 62.0,
-              //alignment: Alignment(x, y),
-              
-              ),
-              Container(
-
-                margin: EdgeInsets.only(top: 10, bottom: 0),
-                child: Align(
-                  //alignment: Alignment(84, 51),
-                  child: Text(
-                    "FOOTY",
-                    style: Theme.of(context).textTheme.title.copyWith(fontSize: 39.0, fontFamily: 'RobotoBlack'),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      );
-
-      final topAppBar = AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      brightness: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Brightness.light : Brightness.dark,
-      title: title,
-      /*actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.list),
-          onPressed: () {},
-        )
-      ],*/
-    );
-
-    
-
     Widget postsUI(String image, String title, String description, String date, String time, int index){
 
     final makeListCard = ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0,),
       leading: Container(
-        width: 100,
+        width: 100.w,
         padding: EdgeInsets.only(right: 3.0),
         decoration: new BoxDecoration(
           border: new Border(
@@ -256,30 +196,29 @@ class _HomePageState extends State<HomePage>{
       ),
       title: new Text(
         date +'     '+time,
-        style: Theme.of(context).textTheme.body1.copyWith(fontSize: 11),
+        style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 10.sp),
       ),
       subtitle: Row(
-
         children: <Widget>[
           Icon(Icons.linear_scale, color: Colors.greenAccent),
-          SizedBox(width: 10,),
+          SizedBox(width: 8.w,),
           Expanded(
             flex: 5,
             child: Padding(
               padding: EdgeInsets.only(top: 7),
               child: new Text(
               title.capitalize(),
-              style: Theme.of(context).textTheme.title.copyWith(fontSize: 19, letterSpacing: 0.8,), maxLines: 2, overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16.sp, letterSpacing: 0.8,), maxLines: 2, overflow: TextOverflow.ellipsis,
             )),
           )
         ],
       ),
       trailing: Icon(Icons.keyboard_arrow_right, color: Theme.of(context).iconTheme.color, size: 20.0,),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(postt: postList[index])));
-        /*_generatePalette(context, postList[index].image, index).then((_palette) {
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(postt: postList[index])));
+        _generatePalette(context, postList[index].image, index).then((_palette) {
           Navigator.push(context, MaterialPageRoute(builder: (context) => Details(postt: postList[index], palette: _palette)),);
-        });*/
+        });
       },
     );
 
@@ -290,38 +229,6 @@ class _HomePageState extends State<HomePage>{
       margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 4.0),
       //color: Color(0xffF3F3F3),
       child: makeListCard
-      /*new Container(
-        padding: new EdgeInsets.all(14.0),
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                new Text(
-                  date,
-                  style: Theme.of(context).textTheme.subtitle,
-                  textAlign: TextAlign.center,
-                ),
-                new Text(
-                  time,
-                  style: Theme.of(context).textTheme.subtitle,
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-
-            SizedBox(height: 10.0,),
-            new Image.network(image, fit: BoxFit.cover),
-            SizedBox(height: 10.0,),
-            new Text(
-                  description,
-                  style: Theme.of(context).textTheme.subhead,
-                  textAlign: TextAlign.center,
-                ),
-          ],
-        ),
-      ),*/
     );
   }
 
@@ -331,7 +238,7 @@ class _HomePageState extends State<HomePage>{
           Column(
             children: <Widget>[
               Container(
-                height: 180.0,
+                height: 160.h,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
@@ -354,7 +261,7 @@ class _HomePageState extends State<HomePage>{
             padding: const EdgeInsets.all(16.0),
             child: Text(
               title.capitalize(),
-              style: Theme.of(context).textTheme.title.copyWith(fontSize: 25.0, letterSpacing: 1), maxLines: 2, overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 20.sp, letterSpacing: 1), maxLines: 2, overflow: TextOverflow.ellipsis,
             ),
           ),
           Padding(
@@ -363,12 +270,12 @@ class _HomePageState extends State<HomePage>{
               children: <Widget>[
                 Text(
                   date+", "+time,
-                  style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14.0),
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 12.sp),
                 ),
                 Spacer(),
                 Text(
                   "Football",
-                  style: Theme.of(context).textTheme.body1.copyWith(fontSize: 14.0),
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(fontSize: 12.sp),
                 )
               ],
             ),
@@ -393,17 +300,16 @@ class _HomePageState extends State<HomePage>{
 
     return GestureDetector(
       child: Card(
-        elevation: 2.0,
+        elevation: 0.1,
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        //color: Colors.white,
         child: specialCard
       ),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(postt: postList[index])));
-        /*_generatePalette(context, postList[index].image, index).then((_palette) {
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => Detail(postt: postList[index])));
+        _generatePalette(context, postList[index].image, index).then((_palette) {
           Navigator.push(context, MaterialPageRoute(builder: (context) => Details(postt: postList[index], palette: _palette)),);
-        });*/
+        });
       },
     );
   }
@@ -411,102 +317,84 @@ class _HomePageState extends State<HomePage>{
     Widget _buildSuggestions() {
       return new Container(
         //key: PageStorageKey('Page 1'),
-        child:
-            postList.length == 0 ? new Center(child: CircularProgressIndicator(backgroundColor: Color(0xffF3F3F3), valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),) /*new Text("No Blog Post Avaliable at the Moment")*/ : CustomScrollView(
-              key: PageStorageKey('Page 1'),
-              controller: _scrollController,
-              slivers: <Widget>[
-              //mainAxisAlignment: MainAxisAlignment.center,
-              //children: <Widget>[
-                 //Column(
-                  //children: <Widget>[
-                    SliverToBoxAdapter(
-                      child: Column(
-                        children: <Widget>[
-                          PicCarousel(),
-                          SizedBox(height: 20.0,)
-                          
-                        ],
+        child:postList.length == 0 ? new Center(child: CircularProgressIndicator(backgroundColor: Color(0xffF3F3F3), valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),),) /*new Text("No Blog Post Avaliable at the Moment")*/ : CustomScrollView(
+          controller: _scrollController,
+          slivers: <Widget>[
+            SliverToBoxAdapter(
+              child: Column(
+                children: <Widget>[
+                  PicCarousel(),
+                  SizedBox(height: 20.0,)
+                  
+                ],
+              ),
+            ),
+            SliverToBoxAdapter(
+              child:  Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(left: 25, top: 20),
+                    child: Text(
+                      "News Feed",
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        // letterSpacing: 0.5,
+                        color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,
+                        decoration: TextDecoration.none
                       ),
+                      textAlign: TextAlign.left,
                     ),
-                    SliverToBoxAdapter(
-                      child:  Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(left: 25, top: 20),
-                            child: Text("News Feed", style: TextStyle(fontSize: 27, fontFamily: 'Roboto', letterSpacing: 0.5, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, decoration: TextDecoration.none), textAlign: TextAlign.left,),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 0.0, top: 2),
-                            child: Divider(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black38 : Colors.white24, endIndent: 15, indent: 15,),
-                          ),
-                        ],
-                      ),
-                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 0.0, top: 2),
+                    child: Divider(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black38 : Colors.white24, endIndent: 15, indent: 15,),
+                  ),
+                ],
+              ),
+            ),
 
-                    SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) => 
-                         index == postList.length ? 
-                         AnimatedContainer(
-                           duration: Duration(seconds: 1),
-                           width: full == true ? 0 : 20,
-                           height: full == true ? 0 : 20,
-                           child: CupertinoActivityIndicator(),
-                          ) : index == 0 ? new Column(children: <Widget>[postsUIS(postList[index].image, postList[index].title, postList[index].description, postList[index].date, postList[index].time, index),const SizedBox(height: 10.0,), Divider(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black26 : Colors.white12, endIndent: 12, indent: 12,), const SizedBox(height: 10.0,)],) : 
-                        
-                        postsUI(postList[index].image, postList[index].title, postList[index].description, postList[index].date, postList[index].time, index),
-                        childCount: postList.length+1,
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => 
+                  index == postList.length ?
+                  full ? SizedBox() : Center(child: CircularProgressIndicator()) : index == 0 ? Column(
+                    children: [
+                      postsUIS(postList[index].image, postList[index].title, postList[index].description, postList[index].date, postList[index].time, index),
+                      SizedBox(height: 10.0,),
+                      Divider(
+                        color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black26 : Colors.white12,
+                        endIndent: 12,
+                        indent: 12,
                       ),
-                    ),
-                    
-                  
-                
-                  ],
-                ),
-                  
-                
-             // ],
-            //),
-            
+                      SizedBox(height: 10.0,)
+                    ],
+                  ) : postsUI(postList[index].image, postList[index].title, postList[index].description, postList[index].date, postList[index].time, index),
+                childCount: postList.length+1,
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 15.h,),
+            )
+          ],
+        ),
       );
     }
 
       
 
     return Scaffold(
-      //backgroundColor: Color(0xffF3F3F3),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(MediaQuery.of(context).size.height*0.07),
-        child: topAppBar,
+        child: topAppBar(context),
       ),
-      body:
-          RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: _refresh,
-            child:
-            _buildSuggestions(),
-              
-          ),
-      
-      
-       /*fit: StackFit.expand,
-         children: <Widget>[
-           Positioned(
-            top: 30,
-            left: 10,
-            width: 60,
-            height: 70,
-            child: Image.asset('assets/images/small.png'),
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Text('Hello'),
-          )
-         ],*/
-      );
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: _refresh,
+        child: _buildSuggestions(),
+      ),
+    );
   }
 
   Future<Null> _refresh() async {
@@ -546,7 +434,7 @@ class PicCarousel extends StatefulWidget {
     
     class _PicCarouselState extends State<PicCarousel> {
 
-      static final List<String> imgList = ["leagued.jpg", "roundup.png", "plain.png", "united.jpeg", "Liverpool.jpeg", "Chealsea.jpeg"];
+      static final List<String> imgList = ["leagued.jpg", "roundup.png", "plain.png", "united.jpeg", "Liverpool.jpeg"];
 
       final List<Widget> child = _map<Widget>(imgList, (index, String assetName){
         return Container(

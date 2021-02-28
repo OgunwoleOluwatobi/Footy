@@ -3,8 +3,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:footyappp/Home.dart';
+import 'package:footyappp/views/widgets/utility_widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,6 +19,7 @@ class Upload extends StatefulWidget {
 class _UploadState extends State<Upload> {
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  ImagePicker imagePicker = ImagePicker();
   File sampleImage;
   String _myValue;
   String _titleValue;
@@ -43,9 +45,12 @@ class _UploadState extends State<Upload> {
   }
 
   Future getImage() async{
-    var tempImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    PickedFile tempImage = await imagePicker.getImage(
+      source: ImageSource.gallery,
+      imageQuality: 5,
+    );
     setState(() {
-      sampleImage = tempImage;
+      sampleImage = File(tempImage.path);
       enableUpload();
     });
   }
@@ -113,55 +118,25 @@ class _UploadState extends State<Upload> {
   @override
   Widget build(BuildContext context) {
 
-      Widget title = new Container(
-        margin: EdgeInsets.only(left: 0, top: 8, bottom: 0),
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            /*Image.asset(
-              'assets/images/logo.png',
-              height: 92.0,
-              width: 62.0,
-              //alignment: Alignment(13, 8),
-              
-              ),*/
-              Container(
-
-                margin: EdgeInsets.only(left: 15, top: 10, bottom: 0),
-                child: Align(
-                  //alignment: Alignment(84, 51),
-                  child: Text(
-                    "FOOTY",
-                    style: Theme.of(context).textTheme.title.copyWith(fontSize: 39.0, fontFamily: 'RobotoBlack')
-                  ),
-                ),
-              ),
-          ],
-        ),
-      );
-
-      final topAppBar = AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      brightness: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Brightness.light : Brightness.dark,
-      title: title,
-      leading: Image.asset('assets/images/logo.png',
-              height: 92.0,
-              width: 62.0, alignment: Alignment(7, 8)),
-    );
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(MediaQuery.of(context).size.height*0.07),
-        child: topAppBar,
-      ),
-      body: new Container(
+      resizeToAvoidBottomInset: false,
+      appBar: topAppBar(context),
+      body: Container(
         child: Stack(
           children: <Widget>[
-            sampleImage == null ? Container(width: MediaQuery.of(context).size.width, height: MediaQuery.of(context).size.height*0.5, child: Padding(
-              padding: EdgeInsets.only(top: 350.0, left: 50.0, right: 20.0),
-              child: Text("Select an Image to Continue", style:  TextStyle(fontSize: 30, color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontFamily: 'Roboto'),))) : enableUpload(),
+            sampleImage == null ? Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Center(
+                  child: Text(
+                    "Select an Image to Continue",
+                    style:  TextStyle(
+                      fontSize: 30,
+                      color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,
+                      fontFamily: 'Roboto'),),
+                )),
+            ) : enableUpload(),
               Visibility(
                 visible: _visi,
                 child: Opacity(
@@ -172,7 +147,7 @@ class _UploadState extends State<Upload> {
         )
         
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: sampleImage != null ? null : FloatingActionButton(
         onPressed: getImage,
         tooltip: 'Select Image',
         child: new Icon(Icons.add_a_photo),
@@ -182,58 +157,92 @@ class _UploadState extends State<Upload> {
 
   Widget enableUpload(){
     return Container(
-      //width: double.infinity,
-      //height: double.infinity,
-      child: ListView(
-        children: <Widget>[
-          new Form(
+      child: Form(
         key: formKey,
         child: Column(
           children: <Widget>[
-            Image.file(sampleImage,height: 420, width: MediaQuery.of(context).size.width,),
-            SizedBox(height: 15.0,),
-            //Expanded(
-              //flex: 1,
-              //child: 
-              TextFormField(
-              decoration: new InputDecoration(labelText: 'Title', fillColor: Colors.black, focusColor: Colors.black,labelStyle: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 20)),
-              maxLines: null,
-              validator: (value){
-                return value.isEmpty ? 'Title is needed' : null;// ? title = true : title = false;
-              },
-              onSaved: (value){
-                return _titleValue = value;
-              },
-            ),//),
-            //Expanded(
-              //flex: 1,
-              //child: 
-              new TextFormField(
-              decoration: new InputDecoration(labelText: 'Description', labelStyle: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 20)),
-              maxLines: null,
-              validator: (value){
-                return value.isEmpty ? 'Desciption is needed' : null;// ? desc = true : desc = false;
-              },
-              onSaved: (value){
-                return _myValue = value;
-              },
-            ),//),
-            SizedBox(height: 15.0,),
-            //Expanded(
-                          //child: 
-                RaisedButton(
-                elevation: 10.0,
-                child: Text("Post"),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Image.file(
+                      sampleImage,
+                      height: 300.h,
+                      width: double.infinity,
+                    ),
+                    SizedBox(height: 15.0,),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 8.h),
+                      child: TextFormField(
+                        decoration: new InputDecoration(
+                          labelText: 'Title',
+                          fillColor: Colors.black,
+                          focusColor: Colors.black,
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black
+                            ),
+                          ),
+                          labelStyle: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 20)
+                        ),
+                        maxLines: null,
+                        validator: (value){
+                          return value.isEmpty ? 'Title is needed' : null;// ? title = true : title = false;
+                        },
+                        onSaved: (value){
+                          return _titleValue = value;
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 8.h),
+                      child: TextFormField(
+                        decoration: new InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.black
+                            ),
+                          ),
+                          labelText: 'Description',
+                          labelStyle: TextStyle(color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white, fontSize: 20)
+                        ),
+                        maxLines: null,
+                        validator: (value){
+                          return value.isEmpty ? 'Desciption is needed' : null;// ? desc = true : desc = false;
+                        },
+                        onSaved: (value){
+                          return _myValue = value;
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 5.h,),
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
+              child: RaisedButton(
+                padding: EdgeInsets.symmetric(vertical: 15.h),
+                elevation: 2,
+                child: Container(
+                  width: double.infinity,
+                  child: Center(
+                    child: Text(
+                      'Post'
+                    )
+                  )
+                ),
                 textColor: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Colors.black : Colors.white,
                 color: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? new Color(0xffF7931D) : new Color(0xffF7931D),
-
-                onPressed: uploadStatusImage ,
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  uploadStatusImage();
+                },
               ),
-            //)
+            ),
           ],
         ),
-      ),
-        ],
       ),
     );
   }

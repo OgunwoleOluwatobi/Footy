@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:footyappp/Home.dart';
+import 'package:footyappp/views/widgets/utility_widgets.dart';
 import 'package:provider/provider.dart';
 
 import 'ThemeNotifier.dart';
@@ -16,43 +17,6 @@ class _MoreState extends State<More> {
 
   @override
   Widget build(BuildContext context) {
-
-        Widget title = new Container(
-        margin: EdgeInsets.only(left: 0, top: 8, bottom: 0),
-        child: new Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            /*Image.asset(
-              'assets/images/logo.png',
-              height: 92.0,
-              width: 62.0,
-              //alignment: Alignment(13, 8),
-              
-              ),*/
-              Container(
-
-                margin: EdgeInsets.only(left: 15, top: 10, bottom: 0),
-                child: Align(
-                  //alignment: Alignment(84, 51),
-                  child: Text(
-                    "FOOTY",
-                    style: Theme.of(context).textTheme.title.copyWith(fontSize: 39.0, fontFamily: 'RobotoBlack'),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      );
-
-      final topAppBar = AppBar(
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      brightness: Theme.of(context).scaffoldBackgroundColor == Color(0xffF3F3F3) ? Brightness.light : Brightness.dark,
-      title: title,
-      leading: Image.asset('assets/images/logo.png',
-              height: 92.0,
-              width: 62.0, alignment: Alignment(7, 8)),
-    );
 
     Widget _cards() {
       return Container(
@@ -87,6 +51,7 @@ class _MoreState extends State<More> {
                 elevation: 0,
                 margin: EdgeInsets.only(bottom: 5, top: 5),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
+                color: Theme.of(context).scaffoldBackgroundColor,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -106,7 +71,7 @@ class _MoreState extends State<More> {
         //backgroundColor: _dark ? Color(0xff252F38) : Color(0xffF3F3F3),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(MediaQuery.of(context).size.height*0.07),
-          child: topAppBar,
+          child: topAppBar(context),
         ),
         body: new Center(
           child: _cards(),

@@ -6,6 +6,7 @@ import 'package:footyappp/Livescores.dart';
 import 'package:footyappp/More.dart';
 import 'package:footyappp/Stats.dart';
 import 'package:footyappp/Upload.dart';
+import 'package:footyappp/coming_soon.dart';
 
 class Home extends StatefulWidget {
   //Home({Key key, @required this.darkm}) : super(key: key);
@@ -21,15 +22,14 @@ class _HomeState extends State<Home> {
 
   int _cIndex = 0;
   final List<Widget> pages = [
-    HomePage(
-      key: PageStorageKey('Page1'),
-    ),
+    HomePage(),
     Upload(
       key: PageStorageKey('Page2'),
     ),
-    Livescores(
-      key: PageStorageKey('Page3'),
-    ),
+    // Livescores(
+    //   key: PageStorageKey('Page3'),
+    // ),
+    ComingSoon(),
     Stats(
       key: PageStorageKey('Page4'),
       ),
@@ -112,7 +112,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             BottomNavigationBarItem(
-              icon: new Icon(FontAwesomeIcons.bookmark),
+              icon: new Icon(Icons.settings_sharp),
               title: AnimatedContainer(
                 margin: EdgeInsets.only(top: 5),
                 duration: const Duration(milliseconds: 200),

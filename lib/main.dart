@@ -1,25 +1,42 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/screenutil_init.dart';
 import 'package:footyappp/ThemeNotifier.dart';
+import 'package:footyappp/app/core/utils/logger.dart';
+import 'package:footyappp/app/locator.dart';
 import 'package:provider/provider.dart';
 import 'Home.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'ThemeNotifier.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 
- void main() => runApp(
-   /*MaterialApp(
-   home: MyApp(),
-   debugShowCheckedModeBanner: false,
-   theme: AppTheme.lightTheme,
-   darkTheme: AppTheme.darkTheme,
-  ),*/
-  ChangeNotifierProvider<ThemeNotifier>(
-    child: HomeApp(),
-    create:(BuildContext context) {
-      return ThemeNotifier();
-    } ,
-  )
- );
+ void main() async{
+   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.light
+  );
+  setupLogger();
+  await setupLocator();
+  await DotEnv.load(fileName: '.env');
+   runApp(
+    /*MaterialApp(
+    home: MyApp(),
+    debugShowCheckedModeBanner: false,
+    theme: AppTheme.lightTheme,
+    darkTheme: AppTheme.darkTheme,
+    ),*/
+    ChangeNotifierProvider<ThemeNotifier>(
+      child: HomeApp(),
+      create:(BuildContext context) {
+        return ThemeNotifier();
+      } ,
+    )
+  );
+ }
 
  class HomeApp extends StatelessWidget {
   @override
@@ -27,10 +44,12 @@ import 'ThemeNotifier.dart';
     Provider.of<ThemeNotifier>(context).loadThemeData(context);
     return Consumer<ThemeNotifier>(
       builder: (context, appstate, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: Provider.of<ThemeNotifier>(context).currentThemeData,
-          home: MyApp(),
+        return ScreenUtilInit(
+          builder: () => MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: Provider.of<ThemeNotifier>(context).currentThemeData,
+            home: MyApp(),
+          ),
         );
       }
     );
@@ -49,7 +68,7 @@ import 'ThemeNotifier.dart';
    @override
   void initState() {
     super.initState();
-    controller = AnimationController(duration: Duration(seconds: 1), vsync: this);
+    controller = AnimationController(duration: Duration(milliseconds: 1500), vsync: this);
     final CurvedAnimation curve = CurvedAnimation(parent: controller, curve: Curves.ease);
     animation = Tween(begin: 1.0, end: 0.2).animate(curve);
     animation.addStatusListener((status) {
@@ -74,8 +93,8 @@ import 'ThemeNotifier.dart';
    Widget build(BuildContext context) {
      //Provider.of<ThemeNotifier>(context).loadThemeData(context);
 
-     var logoUri = new AssetImage('assets/images/logo.png');
-     var logoImage = new Image(image: logoUri, height: 250.0,);
+     var logoUri = new AssetImage('assets/images/footy.png');
+     var logoImage = new Image(image: logoUri, height: 250.h,);
 
      //var ballsUri = new AssetImage('assets/images/balls.png');
      //var ballsImage = new Image(image: ballsUri, height: 148.0,);
@@ -104,6 +123,7 @@ import 'ThemeNotifier.dart';
                 child: Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       FadeTransition(
                         opacity: animation,
@@ -116,7 +136,7 @@ import 'ThemeNotifier.dart';
                           opacity: animation,
                           child: Text(
                             'FOOTY',
-                            style: TextStyle(fontFamily: 'Montserrat', fontSize: 53.0, fontWeight: FontWeight.bold, color: Colors.black),
+                            style: TextStyle(fontFamily: 'Montserrat', fontSize: 45.sp, fontWeight: FontWeight.w900, color: Colors.black),
                           ),
                         ),
                         /*Padding(

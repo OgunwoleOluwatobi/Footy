@@ -5,6 +5,7 @@ import 'package:feather_icons_flutter/feather_icons_flutter.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:footyappp/app/core/models/Cards.dart';
@@ -206,7 +207,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/fixtures/league/$urlid?timezone=Europe/London'),
       headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "YOUR-API-KEY"
+        "x-rapidapi-key": env['API_KEY']
         }
     );
 
@@ -214,7 +215,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/leagueTable/$urlid'),
       headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "YOUR-API-KEY"
+        "x-rapidapi-key": env['API_KEY']
         }
     );
 
@@ -222,7 +223,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
       Uri.encodeFull('https://api-football-v1.p.rapidapi.com/v2/leagues/league/$urlid'),
       headers: {
         "Accept": "application/json",
-        "x-rapidapi-key": "YOUR-API-KEY"
+        "x-rapidapi-key": env['API_KEY']
         }
     );
 
@@ -493,7 +494,7 @@ class _LivescoresState extends State<Livescores> with SingleTickerProviderStateM
                     child: Row(
                       children: <Widget>[
                         Container(
-                        width: 50,
+                        width: 20,
                         height: 40,
                         decoration: BoxDecoration(
                             image: DecorationImage(
